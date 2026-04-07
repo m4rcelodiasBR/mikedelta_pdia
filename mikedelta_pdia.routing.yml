@@ -1,0 +1,53 @@
+# Rota pública para os utilizadores finais
+mikedelta_pdia.calendar:
+  path: '/md-pdia'
+  defaults:
+    _controller: '\Drupal\mikedelta_pdia\Controller\PdiaCalendarController::build'
+    _title: 'Plano do Dia'
+  requirements:
+    _access: 'TRUE'
+
+# Rota do formulário de definições gerais (JSON de Feriados)
+mikedelta_pdia.settings:
+  path: '/admin/config/content/md-pdia'
+  defaults:
+    _form: '\Drupal\mikedelta_pdia\Form\PdiaSettingsForm'
+    _title: 'Definições do MikeDelta PDia'
+  requirements:
+    _permission: 'administrar mikedelta pdia'
+
+# NOVA ROTA: Calendário Administrativo (Interface de Gestão)
+mikedelta_pdia.admin_calendar:
+  path: '/admin/content/md-pdia/gerenciar'
+  defaults:
+    _controller: '\Drupal\mikedelta_pdia\Controller\PdiaAdminController::buildAdmin'
+    _title: 'Gerir Calendário PDia'
+  requirements:
+    _permission: 'administrar mikedelta pdia'
+
+# NOVA ROTA: API AJAX para Guardar Licenças
+mikedelta_pdia.api_save_license:
+  path: '/admin/api/md-pdia/salvar-licenca'
+  defaults:
+    _controller: '\Drupal\mikedelta_pdia\Controller\PdiaApiController::salvarLicenca'
+  requirements:
+    _permission: 'administrar mikedelta pdia'
+  methods: [POST]
+
+# NOVA ROTA: API AJAX para Apagar Licenças
+mikedelta_pdia.api_delete_license:
+  path: '/admin/api/md-pdia/apagar-licenca'
+  defaults:
+    _controller: '\Drupal\mikedelta_pdia\Controller\PdiaApiController::apagarLicenca'
+  requirements:
+    _permission: 'administrar mikedelta pdia'
+  methods: [POST]
+
+# Rota para o formulário de Importação
+mikedelta_pdia.import_page:
+  path: '/admin/config/content/md-pdia/importar'
+  defaults:
+    _form: '\Drupal\mikedelta_pdia\Form\PdiaImportForm'
+    _title: 'Importar/Atualizar'
+  requirements:
+    _permission: 'administrar mikedelta pdia'

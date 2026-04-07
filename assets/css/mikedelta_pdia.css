@@ -1,0 +1,241 @@
+.pdia-container {
+  width: 100%;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.pdia-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  background: #003366;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.pdia-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: white;
+}
+
+.pdia-btn:hover {
+  color: #82b1ff;
+}
+.pdia-grid-header,
+.pdia-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  text-align: center;
+}
+
+.pdia-grid-header div {
+  font-weight: bold;
+  padding: 10px 0;
+  color: #003366;
+  text-transform: uppercase;
+}
+
+.pdia-day {
+  padding: 15px 5px;
+  border-radius: 4px;
+  background: #f8f9fa;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  border: 1px solid #dee2e6;
+  transition: all 0.2s;
+}
+
+.pdia-day:hover {
+  background: #e9ecef;
+}
+.pdia-day.has-pdf {
+  background: #e3f2fd;
+  border-color: #90caf9;
+  border-left: 4px solid #1976d2;
+}
+
+.pdia-weekend {
+  background: #ffebee;
+  border-color: #ffcdd2;
+  color: #c62828;
+}
+
+.pdia-license {
+  background: #fff9c4;
+  border-color: #fff59d;
+  cursor: help;
+}
+
+.pdia-pdf-link {
+  margin-top: auto;
+  color: #d32f2f;
+}
+
+/* Estilo unificado para as etiquetas de Feriado/Licença */
+.pdia-tag {
+  display: block;
+  font-size: 11px;
+  color: #f57f17;
+  margin-top: 5px;
+  text-align: center;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.pdf-pdia-icon {
+  width: 20px;
+  height: 20px;
+  filter: invert(17%) sepia(87%) saturate(3620%) hue-rotate(345deg) brightness(88%) contrast(97%);
+  margin-top: 5px;
+}
+
+/* Novos Controles Superiores */
+.pdia-year-controls,
+.pdia-month-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8f9fa;
+  padding: 10px 20px;
+  border-radius: 4px;
+  margin-bottom: 5px;
+}
+
+.pdia-title-large {
+  font-size: 24px;
+  font-weight: bold;
+  color: #003366;
+}
+
+.pdia-title-medium {
+  font-size: 18px;
+  font-weight: bold;
+  color: #003366;
+}
+
+.pdia-btn-icon {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #003366;
+  padding: 5px 15px;
+}
+
+.pdia-btn-icon:hover {
+  color: #d32f2f;
+  background: #e9ecef;
+  border-radius: 4px;
+}
+
+/* Controles de Rodapé */
+.pdia-footer-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pdia-goto-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pdia-goto-label {
+  font-weight: bold;
+  color: #333;
+  font-size: 18px;
+}
+
+.pdia-input {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.pdia-input-year {
+  width: 80px;
+}
+
+.pdia-btn-primary {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.pdia-btn-primary:hover {
+  background: #0056b3;
+}
+
+/* Legenda */
+.pdia-legend {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Efeito Célula Clicável */
+.pdia-day.has-pdf:hover {
+  background: #bbdefb;
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  border-color: #1976d2;
+}
+
+/* Responsividade: Ajustes para ecrãs de telemóveis / tablets pequenos */
+@media (max-width: 768px) {
+  .pdia-container {
+    padding: 10px;
+  }
+
+  .pdia-header {
+    padding: 8px 10px;
+    margin-bottom: 15px;
+  }
+
+  .pdia-grid-header div {
+    font-size: 12px;
+    padding: 5px 0;
+  }
+
+  .pdia-day {
+    min-height: 60px;
+    padding: 8px 2px;
+  }
+
+  .pdia-day span {
+    font-size: 14px;
+  }
+
+  .pdia-tag {
+    font-size: 9px;
+    margin-top: 2px;
+  }
+
+  .pdia-pdf-link img {
+    width: 14px;
+    height: 14px;
+  }
+}

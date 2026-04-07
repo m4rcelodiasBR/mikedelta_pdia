@@ -1,0 +1,110 @@
+<?php
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\file\Entity\File;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function mikedelta_pdia_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Rota principal de ajuda para o módulo
+    case 'help.page.mikedelta_pdia':
+      $output = '';
+      $output .= '<h3>' . t('Sobre o MikeDelta PDia') . '</h3>';
+      $output .= '<p>' . t('O Sistema Plano do Dia 2 centraliza, organiza e facilita o acesso aos planos do dia da OM em formato PDF.') . '</p>';
+      
+      $output .= '<h4>' . t('1. Adicionar Novos Planos do Dia (PDF)') . '</h4>';
+      $output .= '<ul>';
+      $output .= '<li>' . t('Vá ao menu superior <strong>Conteúdo > Adicionar conteúdo > MD PDia</strong>.') . '</li>';
+      $output .= '<li>' . t('Selecione a Data correspondente ao boletim.') . '</li>';
+      $output .= '<li>' . t('Faça o upload do arquivo PDF (O sistema irá renomeá-lo e formatar o título automaticamente).') . '</li>';
+      $output .= '<li>' . t('Clique em Salvar. O boletim aparecerá imediatamente no calendário público.') . '</li>';
+      $output .= '</ul>';
+
+      $output .= '<h4>' . t('2. Gestão do Calendário e Controle de Licenças') . '</h4>';
+      $output .= '<ul>';
+      $output .= '<li>' . t('Vá ao menu <strong>Conteúdo > Gerenciar Calendário PDia</strong>.') . '</li>';
+      $output .= '<li>' . t('Nesta tela, clique no botão azul <strong>⚙️ Controle de Licenças</strong>.') . '</li>';
+      $output .= '<li>' . t('Selecione a data e o tipo de rotina (Meio Expediente, Licença Pagamento, etc).') . '</li>';
+      $output .= '</ul>';
+
+      $output .= '<h4>' . t('3. Excluir um Plano do Dia') . '</h4>';
+      $output .= '<ul>';
+      $output .= '<li>' . t('Vá ao menu <strong>Conteúdo</strong> (Lista principal do Drupal).') . '</li>';
+      $output .= '<li>' . t('Pesquise pelo título (Ex: "Boletim - 05/04/2026") ou filtre pelo tipo "MD PDia".') . '</li>';
+      $output .= '<li>' . t('Clique em <strong>Apagar</strong>. O PDF será removido do calendário instantaneamente.') . '</li>';
+      $output .= '</ul>';
+
+      $output .= '<h4>' . t('4. Importação em Massa') . '</h4>';
+      $output .= '<ul>';
+      $output .= '<li>' . t('Acesse a aba <strong>Importar/Atualizar</strong> na tela de gerenciamento de configurações.') . '</li>';
+      $output .= '<li>' . t('Siga as instruções na tela para ler os arquivos antigos da pasta <code>public://importacao_pdia</code> e injetá-los no sistema automaticamente.') . '</li>';
+      $output .= '</ul>';
+
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function mikedelta_pdia_theme() {
+  return [
+    'mikedelta_pdia_calendar' => [
+      'variables' => [
+        'dados_calendario' => NULL,
+      ],
+      'template' => 'mikedelta-pdia-calendar',
+    ],
+
+    'mikedelta_pdia_admin_calendar' => [
+      'variables' => [
+        'dados_calendario' => NULL,
+      ],
+      'template' => 'mikedelta-pdia-admin-calendar',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_node_presave().
+ */
+function mikedelta_pdia_node_presave(EntityInterface $node) {
+  // Alterado de 'pdia' para 'md_pdia'
+  if ($node->bundle() === 'md_pdia') {
+    $data_valor = $node->get('field_data')->value;
+    
+    if (!empty($data_valor)) {
+      $data_obj = new \DateTime($data_valor);
+      $data_formatada = $data_obj->format('dmY');
+      $novo_nome_arquivo = 'PD-' . $data_formatada . '.pdf';
+      
+      $node->setTitle('Plano do Dia - ' . $data_obj->format('d/m/Y'));
+
+      if (!$node->get('field_arquivo')->isEmpty()) {
+        $file_id = $node->get('field_arquivo')->target_id;
+        $file = File::load($file_id);
+        
+        if ($file) {
+          $uri_atual = $file->getFileUri();
+          $file_system = \Drupal::service('file_system');
+          $diretorio = $file_system->dirname($uri_atual);
+          $nova_uri = $diretorio . '/' . $novo_nome_arquivo;
+
+          if ($uri_atual !== $nova_uri) {
+            try {
+              $file_system->move($uri_atual, $nova_uri);
+              $file->setFileUri($nova_uri);
+              $file->setFilename($novo_nome_arquivo);
+              $file->save();
+            } catch (\Exception $e) {
+              \Drupal::logger('mikedelta_pdia')->error('Erro ao renomear PDF: @message', ['@message' => $e->getMessage()]);
+            }
+          }
+        }
+      }
+    }
+  }
+}

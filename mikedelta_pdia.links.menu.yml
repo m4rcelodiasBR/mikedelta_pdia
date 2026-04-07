@@ -1,0 +1,6 @@
+mikedelta_pdia.admin_main:
+  title: 'MikeDelta PDia'
+  description: 'Gerenciar Calendário e Configurações do Plano do Dia.'
+  parent: system.admin_config_content
+  route_name: mikedelta_pdia.admin_calendar
+  weight: 100

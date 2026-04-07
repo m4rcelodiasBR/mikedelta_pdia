@@ -1,0 +1,27 @@
+[
+  {
+    "date": "01-20",
+    "name": "Dia de São Sebastião (Rio de Janeiro)",
+    "type": "municipal"
+  },
+  {
+    "date": "04-23",
+    "name": "Dia de São Jorge (Rio de Janeiro)",
+    "type": "state"
+  },
+  {
+    "date": "06-11",
+    "name": "Dia da Marinha (MB)",
+    "type": "marinha"
+  },
+  {
+    "date": "12-13",
+    "name": "Dia do Marinheiro (MB)",
+    "type": "marinha"
+  },
+  {
+    "date": "10-28",
+    "name": "Dia do Servidor Público Federal (Facultativo)",
+    "type": "facultative"
+  }
+]

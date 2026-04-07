@@ -1,0 +1,150 @@
+<?php
+
+use Drupal\node\Entity\NodeType;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\Core\Site\Settings;
+
+/**
+ * Implements hook_install().
+ */
+function mikedelta_pdia_install() {
+  
+  $private_path = Settings::get('file_private_path');
+  $uri_scheme = !empty($private_path) ? 'private' : 'public';
+
+  // 1. Cria o Tipo de Conteúdo 'md_pdia'
+  if (!NodeType::load('md_pdia')) {
+    NodeType::create([
+      'type' => 'md_pdia',
+      'name' => 'Plano do Dia (MikeDelta PDia)',
+      'description' => 'Cadastro de arquivos PDF para o Plano do Dia.',
+      'display_submitted' => FALSE,
+    ])->save();
+  }
+
+  // 2. Cria a estrutura do campo 'Data'
+  if (!FieldStorageConfig::loadByName('node', 'field_data')) {
+    FieldStorageConfig::create([
+      'field_name' => 'field_data',
+      'entity_type' => 'node',
+      'type' => 'datetime',
+      'settings' => ['datetime_type' => 'date'],
+    ])->save();
+  }
+  
+  if (!FieldConfig::loadByName('node', 'md_pdia', 'field_data')) {
+    FieldConfig::create([
+      'field_name' => 'field_data',
+      'entity_type' => 'node',
+      'bundle' => 'md_pdia',
+      'label' => 'Data',
+      'required' => TRUE,
+    ])->save();
+  }
+
+  // 3. Cria a estrutura do campo 'Arquivo'
+  if (!FieldStorageConfig::loadByName('node', 'field_arquivo')) {
+    FieldStorageConfig::create([
+      'field_name' => 'field_arquivo',
+      'entity_type' => 'node',
+      'type' => 'file',
+      'settings' => [
+        'uri_scheme' => $uri_scheme,
+      ],
+    ])->save();
+  }
+
+  if (!FieldConfig::loadByName('node', 'md_pdia', 'field_arquivo')) {
+    FieldConfig::create([
+      'field_name' => 'field_arquivo',
+      'entity_type' => 'node',
+      'bundle' => 'md_pdia',
+      'label' => 'Arquivo PDF',
+      'required' => TRUE,
+      'settings' => [
+        'file_extensions' => 'pdf',
+        'file_directory' => 'md_pdia/[date:custom:Y]/[date:custom:m]',
+      ],
+    ])->save();
+  }
+
+  // 4. Configura a exibição do formulário
+  $form_display = \Drupal::entityTypeManager()
+    ->getStorage('entity_form_display')
+    ->load('node.md_pdia.default');
+  
+  if (!$form_display) {
+    $form_display = \Drupal::entityTypeManager()
+      ->getStorage('entity_form_display')
+      ->create([
+        'targetEntityType' => 'node',
+        'bundle' => 'md_pdia',
+        'mode' => 'default',
+        'status' => TRUE,
+      ]);
+  }
+  
+  $form_display->setComponent('field_data', [
+    'type' => 'datetime_default',
+    'weight' => 1,
+  ])
+  ->setComponent('field_arquivo', [
+    'type' => 'file_generic',
+    'weight' => 2,
+  ])
+  ->save();
+
+  // 5. Exibe a mensagem de sucesso
+  $messenger = \Drupal::messenger();
+  if ($uri_scheme === 'private') {
+    $messenger->addStatus(t('Módulo instalado com sucesso. O campo de upload foi configurado para usar o Diretório Privado do sistema - private://'));
+  } else {
+    $messenger->addWarning(t('Módulo instalado com sucesso. NOTA: Nenhum diretório privado foi detectado no settings.php. Os PDFs usarão o diretório público - public://'));
+  }
+}
+
+/**
+ * Implements hook_requirements().
+ */
+function mikedelta_pdia_requirements($phase) {
+  $requirements = [];
+
+  if ($phase == 'runtime') {
+    $requirements['mikedelta_pdia_uninstall_warning'] = [
+      'title' => t('MikeDelta PDia: Aviso de Desinstalação'),
+      'value' => t('Atenção: A desinstalação apagará dados.'),
+      'description' => t('Se você desinstalar este módulo, **todos os Planos do Dia (nós de Conteúdo do tipo MD PDia) e suas configurações serão permanentemente apagados do banco de dados**. Os arquivos PDF físicos **NÃO** serão apagados do servidor. Você deverá apagá-los manualmente do diretório public:// (ou private://) para liberar espaço em disco.'),
+      'severity' => REQUIREMENT_INFO,
+    ];
+  }
+
+  return $requirements;
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function mikedelta_pdia_uninstall() {
+  
+  $storage_handler = \Drupal::entityTypeManager()->getStorage('node');
+  $nodes = $storage_handler->loadByProperties(['type' => 'md_pdia']);
+  if (!empty($nodes)) {
+    $storage_handler->delete($nodes);
+  }
+
+  $content_type = NodeType::load('md_pdia');
+  if ($content_type) {
+    $content_type->delete();
+  }
+
+  $field_data = FieldStorageConfig::loadByName('node', 'field_data');
+  if ($field_data) {
+    $field_data->delete();
+  }
+
+  $field_arquivo = FieldStorageConfig::loadByName('node', 'field_arquivo');
+  if ($field_arquivo) {
+    $field_arquivo->delete();
+  }
+}

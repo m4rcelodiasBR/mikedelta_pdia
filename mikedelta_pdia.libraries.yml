@@ -1,0 +1,22 @@
+pdia_calendar_assets:
+  version: 1.0.0
+  css:
+    component:
+      assets/css/mikedelta_pdia.css: {}
+  js:
+    assets/js/mikedelta_pdia.js: {}
+  dependencies:
+    - core/drupalSettings
+    - core/once
+
+pdia_admin_assets:
+  version: 1.0.0
+  css:
+    component:
+      assets/css/mikedelta_pdia_admin.css: {}
+  js:
+    assets/js/mikedelta_pdia_admin.js: {}
+  dependencies:
+    - core/drupalSettings
+    - core/once
+    - mikedelta_pdia/pdia_calendar_assets

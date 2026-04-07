@@ -1,0 +1,96 @@
+<div class="pdia-admin-wrapper" style="max-width: 70%; margin: 0 auto;">
+  
+  <div class="pdia-admin-actions">
+    <button id="btn-open-modal-licencas" class="pdia-btn-primary">
+      Controle de Licenças
+    </button>
+  </div>
+
+  <div class="pdia-container">
+    
+    {# Controles de Ano e Mês iguais ao calendário público #}
+    <div class="pdia-year-controls">
+      <button id="pdia-prev-year" class="pdia-btn-icon">❮</button>
+      <span id="pdia-year-title" class="pdia-title-large">Ano</span>
+      <button id="pdia-next-year" class="pdia-btn-icon">❯</button>
+    </div>
+
+    <div class="pdia-month-controls">
+      <button id="pdia-prev-month" class="pdia-btn-icon">❮</button>
+      <span id="pdia-month-title" class="pdia-title-medium">MÊS</span>
+      <button id="pdia-next-month" class="pdia-btn-icon">❯</button>
+    </div>
+    
+    <div class="pdia-grid-header">
+      <div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div>
+    </div>
+    
+    <div id="pdia-grid" class="pdia-grid"></div>
+
+    {# Rodapé: Botões e Formulário "Ir Para" #}
+    <div class="pdia-footer-controls">
+      <div>
+        <button id="pdia-btn-hoje" class="pdia-btn-primary">Hoje 📅</button>
+      </div>
+      <div class="pdia-goto-form">
+        <span class="pdia-goto-label">Ir para:</span>
+        <select id="pdia-goto-month" class="pdia-input">
+          <option value="0">Janeiro</option><option value="1">Fevereiro</option><option value="2">Março</option>
+          <option value="3">Abril</option><option value="4">Maio</option><option value="5">Junho</option>
+          <option value="6">Julho</option><option value="7">Agosto</option><option value="8">Setembro</option>
+          <option value="9">Outubro</option><option value="10">Novembro</option><option value="11">Dezembro</option>
+        </select>
+        <input type="number" id="pdia-goto-year" class="pdia-input pdia-input-year" min="2013" max="2100" placeholder="Ano">
+        <button id="pdia-btn-goto" class="pdia-btn-primary">Ir</button>
+      </div>
+    </div>
+
+    <div class="pdia-legend">
+       <img src="{{ dados_calendario.icone_pdf }}" alt="PDF" class="pdf-pdia-icon"> 
+       <span>Indica que há Plano do Dia disponível.</span>
+    </div>
+
+  </div>
+
+  {# Modal de Licenças (Oculto por padrão) #}
+  <div id="pdia-modal-licencas" class="pdia-modal" style="display: none;">
+    <div class="pdia-modal-content">
+      <div class="pdia-modal-header">
+        <h3>Controle de Licenças</h3>
+        <button id="btn-close-modal" class="pdia-btn-close">×</button>
+      </div>
+      
+      <div class="pdia-modal-body">
+        <div id="lista-licencas-container" style="display:none;">
+          <h4>Licenças deste Mês:</h4>
+          <ul id="lista-licencas-mes" class="pdia-lista-licencas"></ul>
+          <hr>
+        </div>
+
+        <h4>Adicionar/Editar Novo Evento</h4>
+        <form id="form-licenca-admin">
+          <div class="pdia-form-group">
+            <label>Selecione a Data:</label>
+            <input type="date" id="admin-licenca-data" required>
+          </div>
+          
+          <div class="pdia-form-group">
+            <label>Tipo de Evento:</label>
+            <div><label><input type="radio" name="tipo_evento" value="Licença Pagamento (MB)" checked> Licença Pagamento</label></div>
+            <div><label><input type="radio" name="tipo_evento" value="Rotina Administrativa (MB)"> Rotina Administrativa</label></div>
+            <div><label><input type="radio" name="tipo_evento" value="Rotina Especial (MB)"> Rotina Especial</label></div>
+            <div><label><input type="radio" name="tipo_evento" value="outros" id="radio-outros"> Outros (especificar abaixo)</label></div>
+          </div>
+
+          <div class="pdia-form-group">
+            <input type="text" id="admin-licenca-outro" placeholder="Digite o nome do evento" disabled>
+          </div>
+
+          <div class="pdia-modal-footer">
+            <button type="submit" class="pdia-btn-success">Salvar Licença</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

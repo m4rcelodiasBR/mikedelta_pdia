@@ -1,0 +1,19 @@
+# Aba 1: Calendário de Licenças (Aba Principal)
+mikedelta_pdia.admin_calendar_tab:
+  route_name: mikedelta_pdia.admin_calendar
+  base_route: mikedelta_pdia.admin_calendar
+  title: 'Gerenciar Calendário'
+  weight: 10
+
+# Aba 2: Configurações do Módulo (Feriados JSON)
+mikedelta_pdia.settings_tab:
+  route_name: mikedelta_pdia.settings
+  base_route: mikedelta_pdia.admin_calendar
+  title: 'Configurações Avançadas'
+  weight: 20
+
+mikedelta_pdia.import_tab:
+  route_name: mikedelta_pdia.import_page
+  base_route: mikedelta_pdia.admin_calendar
+  title: 'Importar/Atualizar'
+  weight: 30
