@@ -6,9 +6,9 @@ class PdiaAdminController extends PdiaCalendarController {
 
   public function buildAdmin() {
     $build = parent::build();
-    $build['#theme'] = 'mikedelta_pdia_admin_calendar';
-    $build['#attached']['library'] = ['mikedelta_pdia/pdia_admin_assets'];
-
+    $build['calendario']['#theme'] = 'mikedelta_pdia_admin_calendar';
+    $build['calendario']['#attached']['library'][] = 'mikedelta_pdia/pdia_admin_assets';
+    unset($build['titulo_pagina']);
     return $build;
   }
 }

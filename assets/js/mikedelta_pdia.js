@@ -7,9 +7,11 @@
 
       elements.forEach(function (container) {
         const dados = settings.mikedeltaPdia || {};
-        const licencas = dados.licencas || {};
         const arquivos = dados.arquivos || {};
-        const feriados = dados.feriados || {}; // Agora é um objeto
+        const licencas = dados.licencas || {};
+        const nacionais = dados.nacionais || {};
+        const regionais = dados.regionais || {};
+        const especificos = dados.especificos || {};
         const iconePdf = dados.icone_pdf || '';
 
         let currentDate = new Date();
@@ -38,6 +40,7 @@
             dayDiv.className = 'pdia-day';
             
             const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            const monthDayStr = `${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
             const currentDayOfWeek = new Date(year, month, day).getDay();
 
             dayDiv.innerHTML = `<span>${day}</span>`;
@@ -46,18 +49,24 @@
               dayDiv.classList.add('pdia-weekend');
             }
 
-            // Ponto 1: Nomes corretos e Tooltips
             if (licencas[dateStr]) {
               dayDiv.classList.add('pdia-license');
               dayDiv.setAttribute('title', 'Licença MB');
               dayDiv.innerHTML += `<small class="pdia-tag">${licencas[dateStr]}</small>`;
-            } else if (feriados[dateStr]) {
+            } else if (especificos[dateStr]) {
+              dayDiv.classList.add('pdia-license');
+              dayDiv.setAttribute('title', 'Feriado Específico');
+              dayDiv.innerHTML += `<small class="pdia-tag">${especificos[dateStr]}</small>`;
+            } else if (regionais[monthDayStr]) {
+              dayDiv.classList.add('pdia-license');
+              dayDiv.setAttribute('title', 'Feriado Regional');
+              dayDiv.innerHTML += `<small class="pdia-tag">${regionais[monthDayStr]}</small>`;
+            } else if (nacionais[dateStr]) {
               dayDiv.classList.add('pdia-license');
               dayDiv.setAttribute('title', 'Feriado Nacional');
-              dayDiv.innerHTML += `<small class="pdia-tag">${feriados[dateStr]}</small>`;
+              dayDiv.innerHTML += `<small class="pdia-tag">${nacionais[dateStr]}</small>`;
             }
 
-            // Ponto 4: Célula inteira clicável
             if (arquivos[dateStr]) {
               dayDiv.classList.add('has-pdf');
               dayDiv.style.cursor = 'pointer';

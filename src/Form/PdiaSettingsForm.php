@@ -50,38 +50,40 @@ class PdiaSettingsForm extends ConfigFormBase {
       ],
     ];
 
-    $form['explicacao_feriados'] = [
+    // --- DENTRO DA FUNÇÃO buildForm() ---
+
+    // Novo Texto Explicativo Unificado
+    $form['explicacao_adicionais'] = [
       '#type' => 'markup',
       '#markup' => '
-        <div style="background: #fff3cd; padding: 15px; border-left: 4px solid #ffc107; margin-bottom: 15px; color: #856404;">
-          <h4 style="margin-top: 0;">Feriados Adicionais e Formatação JSON</h4>
-          <p>Esta função serve para cadastrar datas que não estão no calendário nacional padrão, como feriados municipais, datas comemorativas da OM ou pontos facultativos específicos.</p>
-          <p><strong>Regras de preenchimento:</strong></p>
+        <div style="background: #e2e3e5; padding: 15px; border-left: 4px solid #0056b3; margin-bottom: 15px; color: #383d41;">
+          <h4 style="margin-top: 0;">Feriados Regionais e Específicos</h4>
+          <p>O sistema já possui os Feriados Nacionais na memória. Use este campo para adicionar Feriados do Estado/Município ou Pontos Facultativos da sua OM.</p>
+          <p><strong>Regras de preenchimento:</strong> Um evento por linha, separado por uma barra vertical ( <strong>|</strong> ).</p>
           <ul>
-            <li>O conteúdo deve ser um JSON válido (começa com <code>[</code> e termina com <code>]</code>).</li>
-            <li>Cada evento deve ter os campos <code>"date"</code> (no formato AAAA-MM-DD) e <code>"name"</code> (o nome que aparecerá no calendário).</li>
-            <li>Use aspas duplas em todos os nomes de campos e valores.</li>
+            <li>Para repetir <strong>todos os anos</strong>, digite apenas Dia e Mês: <code>DD/MM | Nome</code></li>
+            <li>Para <strong>um ano específico</strong>, digite a data completa: <code>DD/MM/AAAA | Nome</code></li>
           </ul>
+          <pre style="background: #212529; color: #f8f9fa; padding: 15px; border-radius: 4px; overflow-x: auto;"><code>20/01 | Dia de São Sebastião (Feriado Regional)
+          15/08/2026 | Ponto Facultativo Excepcional</code></pre>
         </div>
       ',
     ];
 
-    $form['feriados_custom'] = [
+    $form['feriados_adicionais'] = [
       '#type' => 'textarea',
-      '#title' => $this->t('Adicione o Formato JSON aqui'),
-      '#description' => $this->t('Cole aqui o conteúdo de um arquivo JSON caso precise sobrescrever ou adicionar feriados. Exemplo: [{"date": "2026-09-07", "name": "Independência do Brasil", "type": "national"}]'),
-      '#default_value' => $config->get('feriados_custom'),
-      '#rows' => 10,
+      '#title' => $this->t('Lista de Feriados Adicionais'),
+      '#default_value' => $config->get('feriados_adicionais'),
+      '#rows' => 6,
     ];
 
     return parent::buildForm($form, $form_state);
   }
 
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $this->config('mikedelta_pdia.settings')
-      ->set('feriados_custom', $form_state->getValue('feriados_custom'))
-      ->save();
-
-    parent::submitForm($form, $form_state);
-  }
+  $this->config('mikedelta_pdia.settings')
+    ->set('feriados_adicionais', $form_state->getValue('feriados_adicionais'))
+    ->save();
+  parent::submitForm($form, $form_state);
+}
 }

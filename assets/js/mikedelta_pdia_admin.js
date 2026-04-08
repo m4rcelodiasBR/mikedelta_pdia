@@ -81,7 +81,6 @@
           }
         });
 
-        // Salvar Nova Licença
         form.addEventListener('submit', (e) => {
           e.preventDefault();
           const dataSel = document.getElementById('admin-licenca-data').value;
@@ -103,7 +102,6 @@
             }
           });
         });
-
       });
     }
   };

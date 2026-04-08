@@ -4,6 +4,7 @@ use Drupal\node\Entity\NodeType;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\Core\Site\Settings;
+use Drupal\Core\Field\Entity\BaseFieldOverride;
 
 /**
  * Implements hook_install().
@@ -21,6 +22,13 @@ function mikedelta_pdia_install() {
       'description' => 'Cadastro de arquivos PDF para o Plano do Dia.',
       'display_submitted' => FALSE,
     ])->save();
+    $promote_override = BaseFieldOverride::create([
+      'field_name' => 'promote',
+      'entity_type' => 'node',
+      'bundle' => 'md_pdia',
+    ]);
+    $promote_override->setDefaultValue(FALSE);
+    $promote_override->save();
   }
 
   // 2. Cria a estrutura do campo 'Data'
