@@ -135,16 +135,24 @@ function mikedelta_pdia_install() {
  */
 function mikedelta_pdia_requirements($phase) {
   $requirements = [];
-
+  
   if ($phase == 'runtime') {
-    $requirements['mikedelta_pdia_uninstall_warning'] = [
-      'title' => t('MikeDelta PDia: Aviso de Desinstalação'),
-      'value' => t('Atenção: A desinstalação apagará dados.'),
-      'description' => t('Se você desinstalar este módulo, **todos os Planos do Dia (nós de Conteúdo do tipo MD PDia) e suas configurações serão permanentemente apagados do banco de dados**. Os arquivos PDF físicos **NÃO** serão apagados do servidor. Você deverá apagá-los manualmente do diretório public:// (ou private://) para liberar espaço em disco.'),
-      'severity' => REQUIREMENT_INFO,
-    ];
+    if (!class_exists('\ZipArchive')) {
+      $requirements['mikedelta_pdia_zip'] = [
+        'title' => t('PHP ZipArchive (MikeDelta PDia)'),
+        'value' => t('Não instalado'),
+        'description' => t('A extensão <strong>php-zip</strong> do PHP é obrigatória para executar as rotinas de Importação e Exportação de backups do Plano do Dia. Habilite a extensão <strong>php-zip</strong> no servidor.'),
+        'severity' => REQUIREMENT_ERROR,
+      ];
+    } else {
+      $requirements['mikedelta_pdia_zip'] = [
+        'title' => t('PHP ZipArchive (MikeDelta PDia)'),
+        'value' => t('Instalado e Ativo'),
+        'severity' => REQUIREMENT_OK,
+      ];
+    }
   }
-
+  
   return $requirements;
 }
 

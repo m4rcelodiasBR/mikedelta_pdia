@@ -155,7 +155,7 @@ class PdiaCalendarController extends ControllerBase {
     $build = [];
 
     $build['titulo_pagina'] = [
-      '#markup' => '<h1 class="page-title mb-4">' . $this->t('Plano do Dia') . '</h1>',
+      '#markup' => '<h1 class="page-title mb-0">' . $this->t('Plano do Dia') . '</h1>',
     ];
 
     $build['calendario'] = [

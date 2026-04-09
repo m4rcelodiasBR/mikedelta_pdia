@@ -40,6 +40,20 @@ class PdiaImportExportForm extends FormBase {
   }
 
   public function buildForm(array $form, FormStateInterface $form_state) {
+
+    if (!class_exists('\ZipArchive')) {
+      $mensagem = '<strong>ERRO CRÍTICO DE SERVIDOR: A extensão "ZipArchive" do PHP não está instalada ou ativada.</strong><br><br>';
+      $mensagem .= 'As rotinas de Importação e Exportação exigem a manipulação de arquivos .zip. Para liberar o acesso a esta tela, acesse o terminal do seu servidor, instale a biblioteca e reinicie o serviço web. Exemplos de comandos por distribuição:<br><br>';
+      $mensagem .= '<ul style="background: #f8d7da; border: 1px solid #f5c6cb; padding: 15px 15px 15px 35px; border-radius: 4px; color: #721c24;">';
+      $mensagem .= '<li style="margin-bottom: 8px;"><strong>Oracle Linux / RHEL / AlmaLinux:</strong><br><code>sudo dnf install php-zip -y && sudo systemctl restart php-fpm</code></li>';
+      $mensagem .= '<li style="margin-bottom: 8px;"><strong>Ubuntu / Debian:</strong><br><code>sudo apt-get install php-zip -y && sudo systemctl restart apache2</code> (ou <code>php-fpm</code>)</li>';
+      $mensagem .= '<li><strong>SUSE / openSUSE:</strong><br><code>sudo zypper install php-zip && sudo systemctl restart php-fpm</code></li>';
+      $mensagem .= '</ul>';
+
+      $this->messenger()->addError(Markup::create($mensagem));
+      return $form;
+    }
+
     $scheme = $this->getScheme();
 
     // ==========================================

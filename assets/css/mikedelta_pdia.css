@@ -1,9 +1,9 @@
 .pdia-container {
   width: 100%;
   background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  padding: 1rem;
   box-sizing: border-box;
 }
 
@@ -11,11 +11,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
   background: #003366;
   color: white;
   padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: 0.5rem;
 }
 
 .pdia-btn {
@@ -44,35 +44,62 @@
 }
 
 .pdia-day {
-  padding: 15px 5px;
-  border-radius: 4px;
-  background: #f8f9fa;
+  position: relative;
+  padding: 25px 8px 8px 8px !important;
+  border-radius: 0.4rem;
+  background-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(3px);
   min-height: 80px;
+  border: 1px solid rgba(222, 226, 230, 0.8);
+  transition: all 0.2s ease-in-out;
+}
+
+.pdia-day .dia-numero {
+  position: absolute;
+  top: 6px;
+  left: 8px;
+  font-size: 0.8em;
+  font-weight: bold;
+  color: #555;
+}
+
+.pdia-day.dia-atual {
+  box-shadow: inset 0px 0px 0px 3px #0056b3 !important; /* Borda interna azul */
+}
+
+.pdia-day.dia-atual .dia-numero {
+  color: #0056b3;
+  font-size: 0.95em;
+}
+
+.conteudo-celula {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: center;
-  border: 1px solid #dee2e6;
-  transition: all 0.2s;
+  justify-content: flex-start;
+  gap: 5px;
+  width: 100%;
 }
 
 .pdia-day:hover {
-  background: #e9ecef;
+  filter: brightness(0.92); /* Escurecimento mantendo a cor original */
+  cursor: default;
 }
 .pdia-day.has-pdf {
-  background: #e3f2fd;
+  background-color: rgba(227, 242, 253, 0.6);
   border-color: #90caf9;
   border-left: 4px solid #1976d2;
+  cursor: pointer;
 }
 
 .pdia-weekend {
-  background: #ffebee;
+  background-color: rgba(255, 235, 238, 0.6);
   border-color: #ffcdd2;
   color: #c62828;
 }
 
 .pdia-license {
-  background: #fff9c4;
+  background-color: rgba(255, 249, 196, 0.6);
   border-color: #fff59d;
   cursor: help;
 }
@@ -94,9 +121,9 @@
 }
 
 .pdf-pdia-icon {
-  width: 20px;
-  height: 20px;
-  filter: invert(17%) sepia(87%) saturate(3620%) hue-rotate(345deg) brightness(88%) contrast(97%);
+  width: 1.5rem;
+  filter: invert(17%) sepia(87%) saturate(3620%) hue-rotate(345deg)
+    brightness(88%) contrast(97%);
   margin-top: 5px;
 }
 
@@ -108,7 +135,7 @@
   align-items: center;
   background: #f8f9fa;
   padding: 10px 20px;
-  border-radius: 4px;
+  border-radius: 0.4rem;
   margin-bottom: 5px;
 }
 
@@ -136,7 +163,7 @@
 .pdia-btn-icon:hover {
   color: #d32f2f;
   background: #e9ecef;
-  border-radius: 4px;
+  border-radius: 0.4rem;
 }
 
 /* Controles de Rodapé */
@@ -164,7 +191,7 @@
 .pdia-input {
   padding: 6px 10px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 0.4rem;
 }
 
 .pdia-input-year {
@@ -176,7 +203,7 @@
   color: white;
   border: none;
   padding: 8px 16px;
-  border-radius: 4px;
+  border-radius: 0.4rem;
   cursor: pointer;
   font-weight: bold;
 }
@@ -197,7 +224,6 @@
 
 /* Efeito Célula Clicável */
 .pdia-day.has-pdf:hover {
-  background: #bbdefb;
   transform: scale(1.02);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 10;
