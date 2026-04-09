@@ -10,8 +10,8 @@ mikedelta_pdia.settings_tab:
   title: 'Definições Gerais'
   weight: 20
 
-mikedelta_pdia.import_tab:
-  route_name: mikedelta_pdia.import_page
+mikedelta_pdia.import_export_tab:
+  route_name: mikedelta_pdia.import_export_page
   base_route: mikedelta_pdia.admin_calendar
-  title: 'Importar/Atualizar'
+  title: 'Importar/Exportar'
   weight: 30

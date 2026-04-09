@@ -18,24 +18,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-
 namespace Drupal\mikedelta_pdia\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 
-class PdiaSettingsForm extends ConfigFormBase {
+class PdiaSettingsForm extends ConfigFormBase
+{
 
-  protected function getEditableConfigNames() {
+  protected function getEditableConfigNames()
+  {
     return ['mikedelta_pdia.settings'];
   }
 
-  public function getFormId() {
+  public function getFormId()
+  {
     return 'mikedelta_pdia_settings_form';
   }
 
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state)
+  {
     $config = $this->config('mikedelta_pdia.settings');
 
     // Container para alinhar os botões à direita
@@ -75,16 +78,16 @@ class PdiaSettingsForm extends ConfigFormBase {
     $form['explicacao_adicionais'] = [
       '#type' => 'markup',
       '#markup' => '
-        <div style="background: #e2e3e5; padding: 15px; border-left: 4px solid #0056b3; margin-bottom: 15px; color: #383d41;">
-          <h4 style="margin-top: 0;">Feriados Regionais e Específicos</h4>
-          <p>O sistema já possui os Feriados Nacionais na memória. Use este campo para adicionar Feriados do Estado/Município ou Pontos Facultativos da sua OM.</p>
-          <p><strong>Regras de preenchimento:</strong> Um evento por linha, separado por uma barra vertical ( <strong>|</strong> ).</p>
+        <div style="background: #e2e3e5; padding: 15px; border-left: 4px solid #0056b3; margin-bottom: 15px; color: #383d41; border-radius: 4px;">
+          <h4 style="margin-top: 0;">Feriados Regionais e Pontos Facultativos</h4>
+          <p>O motor do sistema já calcula matematicamente todos os <strong>Feriados Nacionais</strong> para qualquer ano. Utilize este campo <strong>apenas</strong> para adicionar datas exclusivas da sua localidade ou da sua OM.</p>
+          <p><strong>Regras de preenchimento:</strong> Insira um evento por linha, separando a data do nome por uma barra vertical ( <strong>|</strong> ).</p>
           <ul>
-            <li>Para repetir <strong>todos os anos</strong>, digite apenas Dia e Mês: <code>DD/MM | Nome</code></li>
-            <li>Para <strong>um ano específico</strong>, digite a data completa: <code>DD/MM/AAAA | Nome</code></li>
+            <li>Para repetir <strong>todos os anos</strong>, digite apenas Dia e Mês: <code>DD/MM | Nome do Evento</code></li>
+            <li>Para <strong>um ano específico</strong>, digite a data completa: <code>DD/MM/AAAA | Nome do Evento</code></li>
           </ul>
-          <pre style="background: #212529; color: #f8f9fa; padding: 15px; border-radius: 4px; overflow-x: auto;"><code>20/01 | Dia de São Sebastião (Feriado Regional)
-          15/08/2026 | Ponto Facultativo Excepcional</code></pre>
+          <pre style="background: #212529; color: #f8f9fa; padding: 15px; border-radius: 4px; overflow-x: auto; margin: 0;"><code>20/01 | Dia de São Sebastião (Feriado Regional)
+15/08/2026 | Ponto Facultativo Excepcional</code></pre>
         </div>
       ',
     ];
@@ -99,10 +102,11 @@ class PdiaSettingsForm extends ConfigFormBase {
     return parent::buildForm($form, $form_state);
   }
 
-  public function submitForm(array &$form, FormStateInterface $form_state) {
-  $this->config('mikedelta_pdia.settings')
-    ->set('feriados_adicionais', $form_state->getValue('feriados_adicionais'))
-    ->save();
-  parent::submitForm($form, $form_state);
-}
+  public function submitForm(array &$form, FormStateInterface $form_state)
+  {
+    $this->config('mikedelta_pdia.settings')
+      ->set('feriados_adicionais', $form_state->getValue('feriados_adicionais'))
+      ->save();
+    parent::submitForm($form, $form_state);
+  }
 }

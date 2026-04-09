@@ -72,25 +72,45 @@ class PdiaCalendarController extends ControllerBase {
         }
     }
 
-    // --- LÓGICA UNIFICADA DE FERIADOS ---
-    $feriados_nacionais = []; // Lidos dos JSONs
+    // --- LÓGICA DE FERIADOS ---
+    $feriados_nacionais = [];
     
-    // 1. Lê TODOS os ficheiros nativos de cache (NACIONAIS)
-    $module_path = \Drupal::service('extension.list.module')->getPath('mikedelta_pdia');
-    $arquivos_feriados = glob($module_path . '/cache_feriados/feriados_*.json');
-    if ($arquivos_feriados) {
-        foreach ($arquivos_feriados as $arquivo) {
-            $feriados_ano = json_decode(file_get_contents($arquivo), TRUE) ?? [];
-            foreach ($feriados_ano as $f) {
-                // Padroniza a data para YYYY-MM-DD
-                $d = $f['date'] ?? null;
-                if (!$d && isset($f['data'])) {
-                    $p = explode('/', $f['data']);
-                    if (count($p) == 3) $d = $p[2].'-'.$p[1].'-'.$p[0];
-                }
-                if ($d) $feriados_nacionais[$d] = $f['name'] ?? 'Feriado Nacional';
-            }
+    // 1. Gera dinamicamente os feriados fixos e móveis para todos os anos (2013 a 2100)
+    for ($y = 2013; $y <= 2100; $y++) {
+        // --- Feriados Fixos ---
+        $feriados_nacionais["$y-01-01"] = 'Confraternização mundial';
+        $feriados_nacionais["$y-04-21"] = 'Tiradentes';
+        $feriados_nacionais["$y-05-01"] = 'Dia do trabalho';
+        $feriados_nacionais["$y-09-07"] = 'Independência do Brasil';
+        $feriados_nacionais["$y-10-12"] = 'Nossa Senhora Aparecida';
+        $feriados_nacionais["$y-11-02"] = 'Finados';
+        $feriados_nacionais["$y-11-15"] = 'Proclamação da República';
+        $feriados_nacionais["$y-12-25"] = 'Natal';
+        
+        // O Dia da Consciência Negra passou a ser feriado nacional a partir de 2024
+        if ($y >= 2024) {
+            $feriados_nacionais["$y-11-20"] = 'Dia da consciência negra';
         }
+
+        // --- Feriados Móveis (Baseados na Páscoa) ---
+        // easter_days() retorna quantos dias depois de 21 de Março cai a Páscoa naquele ano
+        $dias_pascoa = easter_days($y);
+        $data_pascoa = new \DateTime("$y-03-21");
+        $data_pascoa->modify("+$dias_pascoa days");
+        
+        $feriados_nacionais[$data_pascoa->format('Y-m-d')] = 'Páscoa';
+        
+        // Carnaval: 47 dias antes da Páscoa
+        $carnaval = clone $data_pascoa;
+        $feriados_nacionais[$carnaval->modify('-47 days')->format('Y-m-d')] = 'Carnaval';
+        
+        // Sexta-feira Santa: 2 dias antes da Páscoa
+        $sexta_santa = clone $data_pascoa;
+        $feriados_nacionais[$sexta_santa->modify('-2 days')->format('Y-m-d')] = 'Sexta-feira Santa';
+        
+        // Corpus Christi: 60 dias após a Páscoa
+        $corpus_christi = clone $data_pascoa;
+        $feriados_nacionais[$corpus_christi->modify('+60 days')->format('Y-m-d')] = 'Corpus Christi';
     }
 
     // 2. Lê os Adicionais Unificados do Painel

@@ -24,6 +24,24 @@ class PdiaAdminController extends PdiaCalendarController {
 
   public function buildAdmin() {
     $build = parent::build();
+
+    $build['instrucoes_calendario'] = [
+      '#markup' => '
+        <div style="background: #e9ecef; padding: 20px; border-left: 5px solid #003366; margin-bottom: 20px; border-radius: 4px;">
+          <h3 style="margin-top: 0; color: #003366;">Visão Gerencial e Controle de Licenças</h3>
+          <p>Este calendário espelha exatamente a visão pública. Utilize esta interface para auditar a exibição dos PDFs e gerenciar as rotinas exclusivas da OM.</p>
+          <p><strong>Como gerenciar as Licenças e Rotinas:</strong></p>
+          <ol>
+            <li>Clique no botão azul <strong>Controle de Licenças</strong>.</li>
+            <li>No painel, consulte a lista de eventos já registrados para o mês em visualização.</li>
+            <li>Para inserir uma nova rotina, selecione a data exata e o tipo de evento (ex: Licença Pagamento). Se for algo fora do padrão, selecione "Outros" e digite o nome específico.</li>
+            <li>Ao salvar, a rotina será destacada no calendário. <strong>Nota:</strong> As licenças cadastradas aqui possuem prioridade visual máxima e irão se sobrepor aos Feriados Nacionais caso caiam na mesma data.</li>
+          </ol>
+        </div>
+      ',
+      '#weight' => -10,
+    ];
+
     $build['calendario']['#theme'] = 'mikedelta_pdia_admin_calendar';
     $build['calendario']['#attached']['library'][] = 'mikedelta_pdia/pdia_admin_assets';
     unset($build['titulo_pagina']);

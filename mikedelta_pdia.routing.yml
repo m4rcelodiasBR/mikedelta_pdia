@@ -43,10 +43,10 @@ mikedelta_pdia.api_delete_license:
   methods: [POST]
 
 # Rota para o formulário de Importação
-mikedelta_pdia.import_page:
-  path: '/admin/config/content/md-pdia/importar'
+mikedelta_pdia.import_export_page:
+  path: '/admin/config/content/md-pdia/importar-exportar'
   defaults:
-    _form: '\Drupal\mikedelta_pdia\Form\PdiaImportForm'
-    _title: 'Importar/Atualizar'
+    _form: '\Drupal\mikedelta_pdia\Form\PdiaImportExportForm'
+    _title: 'Importar/Exportar'
   requirements:
     _permission: 'administrar mikedelta pdia'

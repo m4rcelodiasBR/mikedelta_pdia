@@ -27,39 +27,41 @@ use Drupal\Core\Routing\RouteMatchInterface;
  */
 function mikedelta_pdia_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
-    // Rota principal de ajuda para o módulo
     case 'help.page.mikedelta_pdia':
       $output = '';
-      $output .= '<h3>' . t('Sobre o MikeDelta PDia') . '</h3>';
-      $output .= '<p>' . t('O Sistema Plano do Dia 2 centraliza, organiza e facilita o acesso aos planos do dia da OM em formato PDF.') . '</p>';
       
-      $output .= '<h4>' . t('1. Adicionar Novos Planos do Dia (PDF)') . '</h4>';
+      $output .= '<h3>' . t('Sobre o MikeDelta PDia') . '</h3>';
+      $output .= '<p><strong>' . t('Versão:') . '</strong> 1.0.0 <em>(Build: Abril/2026)</em><br>';
+      $output .= '<strong>' . t('Desenvolvimento:') . '</strong> Marinha do Brasil.</p>';
+      $output .= '<p>' . t('O MikeDelta PDia é uma solução nativa de alto desempenho para o Drupal, projetada para a gestão e distribuição do Plano do Dia e boletins em PDF da Organização Militar. O sistema elimina a necessidade de manutenção de arquivos estáticos, possuindo um motor matemático independente capaz de calcular os feriados nacionais fixos e móveis (Carnaval, Páscoa, Sexta-Feira Santa e Corpus Christi) para qualquer ano no calendário.') . '</p>';
+
+      $output .= '<h3>' . t('Estrutura de Gerenciamento') . '</h3>';
+      
+      $output .= '<h4>' . t('1. Aba: Ver Calendário (E Gestão de Licenças)') . '</h4>';
+      $output .= '<p>' . t('É o espelho do que é exibido aos militares. O principal recurso desta aba é o <strong>Controle de Licenças</strong>. Ao adicionar um evento (como Licença Pagamento ou Rotina Administrativa), o sistema marca o dia no calendário. <strong>Regra de Negócio:</strong> Eventos de Licença possuem a prioridade mais alta de exibição. Se uma licença for cadastrada no mesmo dia de um Feriado, a interface dará destaque à Licença.') . '</p>';
+
+      $output .= '<h4>' . t('2. Aba: Definições Gerais') . '</h4>';
+      $output .= '<p>' . t('Local onde o administrador deve incluir as regras de exceção do calendário (Feriados Regionais do Estado/Município e Pontos Facultativos). Não é necessário inserir feriados nacionais aqui. Utilize a formatação estrita explicada na própria página para garantir o funcionamento.') . '</p>';
+
+      $output .= '<h4>' . t('3. Aba: Importar Dados') . '</h4>';
+      $output .= '<p>' . t('<strong>Atenção Extrema:</strong> Esta funcionalidade é uma ferramenta de migração de legado. Ela escaneia a pasta <code>importacao_pdia</code> no servidor, extrai a data do nome de cada PDF, cria os nós (nodes) correspondentes no banco de dados do Drupal e move os arquivos para o diretório de destino.') . '</p>';
       $output .= '<ul>';
-      $output .= '<li>' . t('Vá ao menu superior <strong>Conteúdo > Adicionar conteúdo > MD PDia</strong>.') . '</li>';
-      $output .= '<li>' . t('Selecione a Data correspondente ao boletim.') . '</li>';
-      $output .= '<li>' . t('Faça o upload do arquivo PDF (O sistema irá renomeá-lo e formatar o título automaticamente).') . '</li>';
-      $output .= '<li>' . t('Clique em Salvar. O boletim aparecerá imediatamente no calendário público.') . '</li>';
+      $output .= '<li>' . t('Boas práticas: Execute a importação lote a lote (ex: um ano por vez) para não sobrecarregar o tempo máximo de execução (Timeout) do servidor PHP.') . '</li>';
+      $output .= '<li>' . t('Requisito obrigatório: O nome do PDF deve seguir estritamente a máscara <code>PD-DDMMAAAA.pdf</code>.') . '</li>';
+      $output .= '<li>' . t('Faça backup da base de dados antes de processar volumes massivos.') . '</li>';
       $output .= '</ul>';
 
-      $output .= '<h4>' . t('2. Gestão do Calendário e Controle de Licenças') . '</h4>';
-      $output .= '<ul>';
-      $output .= '<li>' . t('Vá ao menu <strong>Conteúdo > Gerenciar Calendário PDia</strong>.') . '</li>';
-      $output .= '<li>' . t('Nesta tela, clique no botão azul <strong>⚙️ Controle de Licenças</strong>.') . '</li>';
-      $output .= '<li>' . t('Selecione a data e o tipo de rotina (Meio Expediente, Licença Pagamento, etc).') . '</li>';
-      $output .= '</ul>';
+      $output .= '<h3>' . t('Operação Diária: Inserindo e Excluindo PDFs') . '</h3>';
+      $output .= '<p>' . t('Para disponibilizar um novo Plano do Dia:') . '</p>';
+      $output .= '<ol>';
+      $output .= '<li>' . t('Acesse <em>Conteúdo > Adicionar conteúdo > Plano do Dia (MikeDelta PDia)</em>.') . '</li>';
+      $output .= '<li>' . t('Insira a Data do boletim. O sistema ignora qualquer nome de título digitado e o reescreve automaticamente para padronização.') . '</li>';
+      $output .= '<li>' . t('Anexe o PDF e salve. O sistema renomeará o arquivo físico no servidor e o alocará em pastas separadas por Ano e Mês de forma autônoma.') . '</li>';
+      $output .= '</ol>';
+      $output .= '<p>' . t('Para <strong>Excluir</strong>, basta buscar o boletim na lista de conteúdos geral do Drupal e apagá-lo. O PDF desaparecerá imediatamente do calendário.') . '</p>';
 
-      $output .= '<h4>' . t('3. Excluir um Plano do Dia') . '</h4>';
-      $output .= '<ul>';
-      $output .= '<li>' . t('Vá ao menu <strong>Conteúdo</strong> (Lista principal do Drupal).') . '</li>';
-      $output .= '<li>' . t('Pesquise pelo título (Ex: "Boletim - 05/04/2026") ou filtre pelo tipo "MD PDia".') . '</li>';
-      $output .= '<li>' . t('Clique em <strong>Apagar</strong>. O PDF será removido do calendário instantaneamente.') . '</li>';
-      $output .= '</ul>';
-
-      $output .= '<h4>' . t('4. Importação em Massa') . '</h4>';
-      $output .= '<ul>';
-      $output .= '<li>' . t('Acesse a aba <strong>Importar/Atualizar</strong> na tela de gerenciamento de configurações.') . '</li>';
-      $output .= '<li>' . t('Siga as instruções na tela para ler os arquivos antigos da pasta <code>public://importacao_pdia</code> e injetá-los no sistema automaticamente.') . '</li>';
-      $output .= '</ul>';
+      $output .= '<h3>' . t('Envio de Feedback e Reporte de Erros') . '</h3>';
+      $output .= '<p>' . t('Este sistema está em contínua evolução. Caso encontre anomalias nos cálculos de datas, falhas de interface ou tenha sugestões de melhorias de fluxo, registre as evidências (prints de tela e mensagens de erro do sistema) e encaminhe para a equipe de desenvolvimento da OM de origem para análise nas próximas versões da Build.') . '</p>';
 
       return $output;
   }
