@@ -1,16 +1,36 @@
+{% if dados_calendario.is_logged_in %}
+  <div class="container node-actions mb-3">
+    <div class="row align-items-center justify-content-end">
+      <div class="col-auto">
+        <strong>AÇÕES <i class="fa-solid fa-circle-chevron-right"></i></strong>
+      </div>
+      <div class="col-auto">
+        <a href="{{ dados_calendario.url_config }}" class="btn btn-sm btn-edit"><i class="fa-solid fa-gear"></i> GERENCIAR</a>
+        </a>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+<h1 class="page-title mb-3">Plano do Dia</h1>
+
 <div class="pdia-container">
-  
-  {# Controles de Ano e Mês iguais ao SysPD2 #}
+  <div class="pdia-top-actions">
+    <a href="https://bono.marinha.mil.br" target="_blank" class="pdia-btn-bono">
+      <img src="/modules/mikedelta_pdia/assets/svg/newspaper.svg" alt="BONO" class="pdia-btn-icon-svg">
+      Acessar BONO
+    </a>
+  </div>
   <div class="pdia-year-controls">
-    <button id="pdia-prev-year" class="pdia-btn-icon">❮</button>
+    <button id="pdia-prev-year" class="pdia-btn-icon">❮❮</button>
     <span id="pdia-year-title" class="pdia-title-large">Ano</span>
-    <button id="pdia-next-year" class="pdia-btn-icon">❯</button>
+    <button id="pdia-next-year" class="pdia-btn-icon">❯❯</button>
   </div>
 
   <div class="pdia-month-controls">
-    <button id="pdia-prev-month" class="pdia-btn-icon">❮</button>
+    <button id="pdia-prev-month" class="pdia-btn-icon">❮❮</button>
     <span id="pdia-month-title" class="pdia-title-medium">Mês</span>
-    <button id="pdia-next-month" class="pdia-btn-icon">❯</button>
+    <button id="pdia-next-month" class="pdia-btn-icon">❯❯</button>
   </div>
   
   <div class="pdia-grid-header">
@@ -19,10 +39,12 @@
   
   <div id="pdia-grid" class="pdia-grid"></div>
 
-  {# Rodapé: Botões e Formulário "Ir Para" #}
   <div class="pdia-footer-controls">
     <div>
-      <button id="pdia-btn-hoje" class="pdia-btn-primary">Hoje 📅</button>
+      <button id="pdia-btn-hoje" class="pdia-btn-primary">
+          <img src="/modules/mikedelta_pdia/assets/svg/calendar-check.svg" alt="Hoje" class="pdia-btn-icon-svg">
+          Hoje
+      </button>
     </div>
     <div class="pdia-goto-form">
       <span class="pdia-goto-label">Ir para:</span>

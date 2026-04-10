@@ -6,19 +6,23 @@
     </button>
   </div>
 
-  <div class="pdia-container">
-    
-    {# Controles de Ano e Mês iguais ao calendário público #}
+  <div class="pdia-container">    
+    <div class="pdia-top-actions">
+      <a href="https://bono.marinha.mil.br" target="_blank" class="pdia-btn-bono">
+        <img src="/modules/mikedelta_pdia/assets/svg/newspaper.svg" alt="BONO" class="pdia-btn-icon-svg">
+        Acessar BONO
+      </a>
+    </div>
     <div class="pdia-year-controls">
-      <button id="pdia-prev-year" class="pdia-btn-icon">❮</button>
+      <button id="pdia-prev-year" class="pdia-btn-icon">❮❮</button>
       <span id="pdia-year-title" class="pdia-title-large">Ano</span>
-      <button id="pdia-next-year" class="pdia-btn-icon">❯</button>
+      <button id="pdia-next-year" class="pdia-btn-icon">❯❯</button>
     </div>
 
     <div class="pdia-month-controls">
-      <button id="pdia-prev-month" class="pdia-btn-icon">❮</button>
+      <button id="pdia-prev-month" class="pdia-btn-icon">❮❮</button>
       <span id="pdia-month-title" class="pdia-title-medium">MÊS</span>
-      <button id="pdia-next-month" class="pdia-btn-icon">❯</button>
+      <button id="pdia-next-month" class="pdia-btn-icon">❯❯</button>
     </div>
     
     <div class="pdia-grid-header">
@@ -30,7 +34,10 @@
     {# Rodapé: Botões e Formulário "Ir Para" #}
     <div class="pdia-footer-controls">
       <div>
-        <button id="pdia-btn-hoje" class="pdia-btn-primary">Hoje 📅</button>
+        <button id="pdia-btn-hoje" class="pdia-btn-primary">
+          <img src="/modules/mikedelta_pdia/assets/svg/calendar-check.svg" alt="Hoje" class="pdia-btn-icon-svg">
+          Hoje
+      </button>
       </div>
       <div class="pdia-goto-form">
         <span class="pdia-goto-label">Ir para:</span>

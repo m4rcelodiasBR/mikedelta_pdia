@@ -142,6 +142,8 @@ class PdiaCalendarController extends ControllerBase {
 
     $caminho_svg = '/' . \Drupal::service('extension.list.module')->getPath('mikedelta_pdia') . '/assets/svg/file-pdf.svg';
 
+    $is_logged_in = \Drupal::currentUser()->isAuthenticated();
+
     $dados_frontend = [
       'arquivos' => $arquivos_por_data,
       'licencas' => $licencas,
@@ -150,13 +152,11 @@ class PdiaCalendarController extends ControllerBase {
       'especificos' => $feriados_especificos,
       'ano_base' => $ano_atual,
       'icone_pdf' => $caminho_svg,
+      'is_logged_in' => $is_logged_in,
+      'url_config' => \Drupal\Core\Url::fromRoute('mikedelta_pdia.admin_calendar')->toString(),
     ];
 
     $build = [];
-
-    $build['titulo_pagina'] = [
-      '#markup' => '<h1 class="page-title mb-0">' . $this->t('Plano do Dia') . '</h1>',
-    ];
 
     $build['calendario'] = [
       '#theme' => 'mikedelta_pdia_calendar',
@@ -167,6 +167,7 @@ class PdiaCalendarController extends ControllerBase {
       ],
       '#cache' => [
         'tags' => ['node_list:md_pdia', 'config:mikedelta_pdia.settings'],
+        'contexts' => ['user.roles:authenticated'],
       ],
     ];
 

@@ -176,7 +176,7 @@
           const imagemSorteada =
             imagensFundo[Math.floor(Math.random() * imagensFundo.length)];
 
-          pdiaContainer.style.backgroundImage = `linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url('${imagemSorteada}')`;
+          pdiaContainer.style.backgroundImage = `linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('${imagemSorteada}')`;
           pdiaContainer.style.backgroundSize = "cover";
           pdiaContainer.style.backgroundPosition = "center";
           pdiaContainer.style.backgroundRepeat = "no-repeat";
