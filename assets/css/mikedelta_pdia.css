@@ -82,7 +82,7 @@
 }
 
 .pdia-day.dia-atual {
-  background-color: #FAB932 !important;
+  background-color: rgba(250, 185, 50, 0.7) !important;
 }
 
 .conteudo-celula {

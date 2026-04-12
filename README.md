@@ -2,7 +2,7 @@
 
 O **MikeDelta PDia** é um módulo de alto desempenho criado para o Drupal 10/11, projetado para gerenciar, visualizar e arquivar o Plano do Dia em PDF de Organizações Militares.
 
-Nascido para facilitar a operação do setor responsável, este módulo elimina arquivos estáticos desnecessários, blinda as regras de negócio de Feriados Nacionais via matemática pura e fornece ferramentas robustas de Backup usando processamento em lote.
+Nascido para facilitar a operação do setor responsável, este módulo elimina a necessidade de módulos adicionais. arquivos estáticos desnecessários, blinda as regras de negócio de Feriados Nacionais via matemática pura e fornece ferramentas robustas de Backup usando processamento em lote.
 
 ## 🚀 Funcionalidades Principais
 
@@ -10,7 +10,7 @@ Nascido para facilitar a operação do setor responsável, este módulo elimina 
 - **Blindagem de Conteúdo:** Garantia de que os PDFs gerados programaticamente nunca aparecerão na página inicial (`Promote: 0`).
 - **Calendário Público Inteligente:** Grade mensal interativa com visualização imediata dos PDFs disponíveis.
 - **Gestão Administrativa:** Painel independente (`/admin/content/md-pdia/gerenciar`) que não interfere nas configurações de cache da página pública.
-- **Controle de Licenças com Regras de Negócio:** Modal AJAX nativo. O sistema possui trava inteligente que impede a marcação de licenças sobre Feriados Nacionais ou Regionais já estabelecidos. Esta funcionalidade é exclusiva para licenças de caráter interno da MB, use com responsabilidade.
+- **Controle de Licenças com Regras de Negócio:** Modal AJAX nativo. O sistema possui trava inteligente que impede a marcação de licenças sobre Feriados e fins de semana já estabelecidos. Esta funcionalidade é exclusiva para licenças de caráter interno da MB, deve ser utilizado com responsabilidade e somente para este fim.
 - **Importação e Exportação (Batch API):**
   - **Importação prática:** Upload de arquivo `.zip` contendo centenas de PDFs. Extração, leitura e criação de conteúdo autônoma sem _Timeout_ do servidor.
   - **Exportação para Backup Seguro:** Exportação de anuários completos de PDFs em um único `.zip` processado em lotes dinâmicos para não estourar a memória RAM.
@@ -19,7 +19,7 @@ Nascido para facilitar a operação do setor responsável, este módulo elimina 
 
 - Drupal 10/11
 - PHP 8.1 ou superior
-- **Extensão PHP ZipArchive (`php-zip`) obrigatória** (A tela de importação bloqueará o uso caso não esteja instalada).
+- **Extensão PHP ZipArchive (`php-zip`) obrigatória** (A tela de importação bloqueará o uso caso não esteja instalada, mas não impede o uso do módulo).
 
 ## ⚙️ Instalação e Configuração
 
@@ -31,6 +31,11 @@ Nascido para facilitar a operação do setor responsável, este módulo elimina 
 6. Na seção `Ver Calendário`, utilize a opção `Gerenciar Licenças` para adicionar, editar ou remover licenças relacionadas e exclusivas da MB ou sua OM.
 
 \*Nota:\_ Nesta tela ficará exibindo as licenças relacionadas ao mês em que você esta navegando.
+
+## Personalização
+
+1. Na tela de `Definições Gerais` é possível aplicar planos de fundo pro calendário upando arquivos de imagens limitados a 1MB cada um e com um limite máximo de 8 imagens.
+2. É possível ajustar o brilho dessas imagens de fundo.
 
 ## 📦 Importação/Exportação
 
@@ -44,7 +49,7 @@ Na seção `Importar/Exportar` você poderá fazer backups ou restauração dos 
 
 - **Para Exportar (ou Backup):**
 
-\*Nota:\_ O sistema vai listar os anos em que existem Planos do Dia publicados. O agrupamento por ano é menos oneroso para o servidor e não afetar a performance durante o processo.
+\*Nota:\_ O sistema vai listar os anos em que existem Planos do Dia publicados. O agrupamento por ano é menos oneroso para o servidor e não afeta a performance durante o processo.
 
 1. Selecione na lista o ano que deseja fazer a exportação.
 2. Clique em `Gerar Arquivo ZIP`.
@@ -58,4 +63,6 @@ Utilize com responsabilidade este módulo e quaisquer bugs encontrados, melhoria
 
 Este projeto é um software livre licenciado sob a Licença Pública Geral GNU (GPLv3) ou posterior. Você pode redistribuí-lo e/ou modificá-lo sob os termos publicados pela Free Software Foundation. Veja o arquivo LICENSE.txt para mais detalhes.
 
-Desenvolvido no contexto de modernização sistêmica para a Marinha do Brasil. Desenvolvido por Marcelo Dias da Silva.
+Desenvolvido no contexto de modernização sistêmica para a Marinha do Brasil por Marcelo Dias da Silva.
+
+## Downloads

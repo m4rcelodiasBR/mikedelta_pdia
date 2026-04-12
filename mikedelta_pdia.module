@@ -33,36 +33,42 @@ function mikedelta_pdia_help($route_name, RouteMatchInterface $route_match) {
       $output .= '<h3>' . t('Sobre o MikeDelta PDia') . '</h3>';
       $output .= '<p><strong>' . t('Versão:') . '</strong> 1.0.0 <em>(Build: Abril/2026)</em><br>';
       $output .= '<strong>' . t('Desenvolvimento:') . '</strong> Marinha do Brasil.</p>';
-      $output .= '<p>' . t('O MikeDelta PDia é uma solução que utiliza recursos nativos de alto desempenho do Drupal, projetada para a gestão e distribuição do Plano do Dia em PDF dentro do âmbito interno da Organização Militar. O sistema elimina a necessidade de utilização, configuração e outros recursos que precisam trabalhar em conjunto para que todo este processo funcione perfeitamente o que fica passível de alguma quebra deste processo caso algum módulo ou recurso fique indisponível ou falhe abruptamente. Resumindo: Este módulo não depende de outros para funcionar.') . '</p>';
+      $output .= '<p>' . t('O MikeDelta PDia é uma solução que utiliza recursos nativos de alto desempenho do Drupal, projetada para a gestão e distribuição do Plano do Dia em PDF dentro do âmbito interno da Organização Militar. O sistema elimina a necessidade de utilização, configuração e outros recursos que precisam trabalhar em conjunto para que todo este processo funcione perfeitamente. O que fica passível de alguma quebra deste processo caso algum módulo ou recurso fique indisponível ou falhe abruptamente. <strong>Resumindo: Este módulo não depende de outros para funcionar</strong>.') . '</p>';
 
-      $output .= '<h3>' . t('Estrutura de Gerenciamento') . '</h3>';
-      $output .= '<h4>' . t('1. Aba: Ver Calendário (Gestão de Licenças)') . '</h4>';
-      $output .= '<p>' . t('É o espelho do que é exibido aos usuários finais. O principal recurso desta aba é o <strong>Controle de Licenças</strong>. Ao adicionar um evento (como Licença Pagamento ou Rotina Administrativa), o sistema marca o dia no calendário. Use-o somente para este fim.') . '</p>';
-      $output .= '<ul>';
-      $output .= '<li>' . t('<strong>Regra de Negócio:</strong> O sistema bloqueará automaticamente qualquer tentativa de cadastrar uma licença em um dia já classificado como Feriado ou Ponto Facultativo.') . '</li>';
-      $output .= '</ul>';
-
-      $output .= '<h4>' . t('2. Aba: Definições Gerais') . '</h4>';
-      $output .= '<p>' . t('Local onde o administrador deve incluir as regras de exceção do calendário (Feriados Regionais do Estado/Município e Pontos Facultativos). Não é necessário inserir feriados nacionais aqui. Utilize a formatação de texto simples exigida na página (Ex: <code>DD/MM | Nome</code>).') . '</p>';
-
-      $output .= '<h4>' . t('3. Aba: Importar/Exportar (Restore ou Backup)') . '</h4>';
+      $output .= '<h3>' . t('Gerenciamento') . '</h3>';
+      
+      $output .= '<h4>' . t('Aba: Importar/Exportar (Restore ou Backup)') . '</h4>';
       $output .= '<p>' . t('O módulo conta com processamento em lote para garantir a estabilidade do servidor durante o manuseio de grandes volumes de PDFs:') . '</p>';
       $output .= '<ul>';
       $output .= '<li>' . t('<strong>Importação:</strong> Faça o upload de um arquivo <code>.zip</code> contendo todos os arquivos PDFs nomeados estritamente formato <code>PD-DDMMAAAA.pdf</code>. O sistema extrairá, processará e criará as publicações no calendário automaticamente sem necessidade de intervenção do administrador. Todos os arquivos serão transferidos para sua respectiva pasta no servidor.') . '</li>';
       $output .= '<li>' . t('<strong>Exportação:</strong> O sistema permite gerar um pacote compactado (.zip) com todos os Planos do Dia, separados ano a ano. O processamento em lotes evita o estouro de memória (Timeout) do servidor PHP.') . '</li>';
       $output .= '</ul>';
 
-      $output .= '<h3>' . t('Operação Diária: Inserindo e Excluindo PDFs') . '</h3>';
+      $output .= '<h4>' . t('Aba: Definições Gerais') . '</h4>';
+      $output .= '<li>' . t('Local onde o administrador deve incluir as regras de exceção do calendário (Feriados Regionais do Estado/Município e Pontos Facultativos). Não é necessário inserir feriados nacionais aqui. Utilize a formatação de texto simples exigida na página (Ex: <code>DD/MM | Nome</code>).') . '</li>';
+      $output .= '<li>' . t('Aqui também é possível personalizar o calendário como adicionar imagens de fundo e definir brilho dessa imagens. Essas imagens mudarão aletariamente ao carregar o Plano do Dia. <strong>Nota: </strong>Só é possível adicionar no máximo 8 imagens.') . '</li>';
+
+      $output .= '<h4>' . t('Aba: Ver Calendário (Gestão de Licenças)') . '</h4>';
+      $output .= '<p>' . t('É o espelho do que é exibido aos usuários finais. O principal recurso desta seção é o <strong>Controle de Licenças</strong>. Ao adicionar um evento (como Licença Pagamento ou Rotina Administrativa), o sistema marca o dia no calendário. Use-o com responsabilidade e somente para este fim.') . '</p>';
+      $output .= '<ul>';
+      $output .= '<li>' . t('<strong>Regra:</strong> O sistema bloqueará automaticamente qualquer tentativa de cadastrar uma licença em um dia já classificado como Feriado, Ponto Facultativo ou fim de semana.') . '</li>';
+      $output .= '</ul>';
+
+      $output .= '<h3>' . t('Inserindo e Excluindo PDFs') . '</h3>';
       $output .= '<p>' . t('Para disponibilizar um novo Plano do Dia:') . '</p>';
       $output .= '<ol>';
       $output .= '<li>' . t('Acesse <em>Conteúdo > Adicionar conteúdo > Plano do Dia (MikeDelta PDia)</em>.') . '</li>';
-      $output .= '<li>' . t('Insira a Data do boletim. O sistema ignora qualquer título digitado e o reescreve automaticamente para o padrão "Plano do Dia - DD/MM/AAAA".') . '</li>';
+      $output .= '<li>' . t('Insira a Data do referido Plano do Dia. O sistema ignora qualquer título digitado e o reescreve automaticamente para o padrão "Plano do Dia - DD/MM/AAAA".') . '</li>';
       $output .= '<li>' . t('Anexe o PDF e salve. O sistema renomeará o arquivo físico no servidor para <code>PD-DDMMAAAA.pdf</code> e garantirá que ele não seja exibido indevidamente na página inicial da OM.') . '</li>';
       $output .= '</ol>';
       $output .= '<p>' . t('Para <strong>Excluir</strong>, basta buscar a publicação na lista de conteúdos geral do Drupal e apagá-la. O PDF desaparecerá imediatamente do calendário.') . '</p>';
+      $output .= '<li>' . t('<strong>Atenção:</strong> O arquivo anexado ao conteúdo publicado continua no servidor. Caso queria exclui-lo permanentemente, acesse o <a href="/admin/content/files">gerenciamento de arquivos do Drupal</a>, procure pelo arquivo e clique em <em>Apagar</em>.') . '</li>';
 
       $output .= '<h3>' . t('Envio de Feedback e Reporte de Erros') . '</h3>';
-      $output .= '<p>' . t('Este sistema está em contínua evolução. Caso encontre anomalias nos cálculos de datas, falhas de interface ou tenha sugestões de melhorias de fluxo, registre as evidências (prints de tela e mensagens de erro do sistema) e encaminhe para a equipe de desenvolvimento da OM de origem.') . '</p>';
+      $output .= '<p>' . t('Este sistema está em contínua evolução. Caso encontre anomalias nos cálculos de datas, falhas de interface ou tenha sugestões de melhorias de fluxo, registre as evidências (prints de tela e mensagens de erro do sistema) e encaminhe para o desenvolverdor através do e-amil:') . '</p>';
+      $output .= '<blockquote><strong>dias.marcelo@marinha.mil.br</strong></blockquote>';
+      $output .= '<p>' . t('Seus relatos são extremamente importantes e servem como combustível para as melhorias e futuras atualizações desta solução.') . '</p>';
+      $output .= '<p>' . t('Este módulo foi desenvolvido por Marcelo Dias da Silva.') . '</p>';
 
       return $output;
   }
