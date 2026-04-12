@@ -6,13 +6,14 @@
     </button>
   </div>
 
+  <div class="pdia-top-actions">
+    <a href="https://bono.marinha.mil.br" target="_blank" class="pdia-btn-bono">
+      <img src="/modules/mikedelta_pdia/assets/svg/newspaper.svg" alt="BONO" class="pdia-btn-icon-svg">
+      Acessar BONO
+    </a>
+  </div>
+
   <div class="pdia-container">    
-    <div class="pdia-top-actions">
-      <a href="https://bono.marinha.mil.br" target="_blank" class="pdia-btn-bono">
-        <img src="/modules/mikedelta_pdia/assets/svg/newspaper.svg" alt="BONO" class="pdia-btn-icon-svg">
-        Acessar BONO
-      </a>
-    </div>
     <div class="pdia-year-controls">
       <button id="pdia-prev-year" class="pdia-btn-icon">❮❮</button>
       <span id="pdia-year-title" class="pdia-title-large">Ano</span>
@@ -40,7 +41,6 @@
       </button>
       </div>
       <div class="pdia-goto-form">
-        <span class="pdia-goto-label">Ir para:</span>
         <select id="pdia-goto-month" class="pdia-input">
           <option value="0">Janeiro</option><option value="1">Fevereiro</option><option value="2">Março</option>
           <option value="3">Abril</option><option value="4">Maio</option><option value="5">Junho</option>
@@ -51,19 +51,18 @@
         <button id="pdia-btn-goto" class="pdia-btn-primary">Ir</button>
       </div>
     </div>
+  </div>
 
-    <div class="pdia-legend">
-       <img src="{{ dados_calendario.icone_pdf }}" alt="PDF" class="pdf-pdia-icon"> 
-       <span>Plano do Dia disponível. Clique para visualizar.</span>
-    </div>
-
+  <div class="pdia-legend">
+    <img src="{{ dados_calendario.icone_pdf }}" alt="PDF" class="pdf-pdia-icon"> 
+    <span>Plano do Dia disponível. Clique para visualizar.</span>
   </div>
 
   {# Modal de Licenças (Oculto por padrão) #}
   <div id="pdia-modal-licencas" class="pdia-modal" style="display: none;">
     <div class="pdia-modal-content">
       <div class="pdia-modal-header">
-        <h3>Controle de Licenças</h3>
+        <h3 id="pdia-modal-title">Controle de Licenças</h3>
         <button id="btn-close-modal" class="pdia-btn-close">×</button>
       </div>
       
@@ -74,7 +73,15 @@
           <hr>
         </div>
 
-        <h4>Adicionar/Editar Novo Evento</h4>
+        <h4>Adicionar/Editar Nova Licença</h4>
+        <div class="pdia-modal-alert">
+          <strong><i class="fa-solid fa-circle-info"></i> Regras de Agendamento:</strong>
+          <ul>
+            <li><strong>Bloqueio:</strong> Não é possível registrar licenças em Finais de Semana ou em dias já classificados como Feriados.</li>
+            <li><strong>Substituição:</strong> Caso selecione um dia que já possua uma licença ativa neste mês, o novo registro irá <strong>sobrescrever</strong> (substituir) a licença anterior automaticamente.</li>
+            <li><span style="color: #d32f2f"><strong>Importante:</strong> Use esta funcionalidade apenas para licenças <strong>não recorrentes</strong> listadas abaixo ou alguma específica de sua OM.</span></li>
+          </ul>
+        </div>
         <form id="form-licenca-admin">
           <div class="pdia-form-group">
             <label>Selecione a Data:</label>

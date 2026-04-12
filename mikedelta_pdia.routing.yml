@@ -1,4 +1,4 @@
-# Rota pública para os utilizadores finais
+# Rota pública para usuários finais
 mikedelta_pdia.calendar:
   path: '/md-pdia'
   defaults:
@@ -7,6 +7,7 @@ mikedelta_pdia.calendar:
   requirements:
     _access: 'TRUE'
 
+# Rota restrita para administradores
 mikedelta_pdia.admin_calendar:
   path: '/admin/content/md-pdia/gerenciar'
   defaults:
@@ -15,7 +16,7 @@ mikedelta_pdia.admin_calendar:
   requirements:
     _permission: 'administrar mikedelta pdia'
 
-# Rota do formulário de definições gerais (JSON de Feriados)
+# Rota do formulário de definições gerais
 mikedelta_pdia.settings:
   path: '/admin/content/md-pdia/definicoes'
   defaults:
@@ -24,7 +25,7 @@ mikedelta_pdia.settings:
   requirements:
     _permission: 'administrar mikedelta pdia'
 
-# NOVA ROTA: API AJAX para Guardar Licenças
+# API AJAX para Guardar Licenças
 mikedelta_pdia.api_save_license:
   path: '/admin/api/md-pdia/salvar-licenca'
   defaults:
@@ -33,7 +34,7 @@ mikedelta_pdia.api_save_license:
     _permission: 'administrar mikedelta pdia'
   methods: [POST]
 
-# NOVA ROTA: API AJAX para Apagar Licenças
+# API AJAX para Apagar Licenças
 mikedelta_pdia.api_delete_license:
   path: '/admin/api/md-pdia/apagar-licenca'
   defaults:

@@ -20,22 +20,44 @@
 
 namespace Drupal\mikedelta_pdia\Controller;
 
+use Drupal\Core\Url;
+
 class PdiaAdminController extends PdiaCalendarController {
 
   public function buildAdmin() {
     $build = parent::build();
 
+    $build['admin_actions'] = [
+      '#type' => 'container',
+      '#attributes' => [
+        'style' => 'display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 20px;',
+      ],
+      '#weight' => -20,
+      'ir_calendario' => [
+        '#title' => $this->t('Ir para o Plano do Dia'),
+        '#type' => 'link',
+        '#url' => Url::fromRoute('mikedelta_pdia.calendar'),
+        '#attributes' => ['class' => ['button', 'button--primary', 'btn', 'btn-primary']],
+      ],
+      'ajuda' => [
+        '#title' => $this->t('Ajuda do Módulo'),
+        '#type' => 'link',
+        '#url' => Url::fromRoute('help.page', ['name' => 'mikedelta_pdia']),
+        '#attributes' => ['class' => ['button', 'btn', 'btn-secondary']],
+      ],
+    ];
+
     $build['instrucoes_calendario'] = [
       '#markup' => '
-        <div style="background: #e9ecef; padding: 20px; border-left: 5px solid #003366; margin-bottom: 20px; border-radius: 4px;">
-          <h3 style="margin-top: 0; color: #003366;">Visão Gerencial e Controle de Licenças</h3>
+        <div>
+          <h4>Visão Gerencial e Controle de Licenças</h4>
           <p>Este calendário espelha exatamente a visão pública. Utilize esta interface para auditar a exibição dos PDFs e gerenciar as rotinas exclusivas da OM.</p>
           <p><strong>Como gerenciar as Licenças e Rotinas:</strong></p>
           <ol>
             <li>Clique no botão azul <strong>Controle de Licenças</strong>.</li>
             <li>No painel, consulte a lista de eventos já registrados para o mês em visualização.</li>
             <li>Para inserir uma nova rotina, selecione a data exata e o tipo de evento (ex: Licença Pagamento). Se for algo fora do padrão, selecione "Outros" e digite o nome específico.</li>
-            <li>Ao salvar, a rotina será destacada no calendário. <strong>Nota:</strong> As licenças cadastradas aqui possuem prioridade visual máxima e irão se sobrepor aos Feriados Nacionais caso caiam na mesma data.</li>
+            <li><strong>Atenção:</strong> Não é possível adicionar essas licenças em dias que já possuem feriados e fins de semana.</li>
           </ol>
         </div>
       ',

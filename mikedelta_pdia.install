@@ -181,4 +181,24 @@ function mikedelta_pdia_uninstall() {
   if ($field_arquivo) {
     $field_arquivo->delete();
   }
+
+  $database = \Drupal::database();
+
+  $query = $database->select('file_usage', 'fu')
+    ->fields('fu', ['fid'])
+    ->condition('module', 'mikedelta_pdia')
+    ->execute();
+
+  $fids = $query->fetchCol();
+
+  if (!empty($fids)) {
+    $file_storage = \Drupal::entityTypeManager()->getStorage('file');
+    $files = $file_storage->loadMultiple($fids);
+    
+    foreach ($files as $file) {
+      $file->delete();
+    }
+  }
+
+  \Drupal::configFactory()->getEditable('mikedelta_pdia.settings')->delete();
 }

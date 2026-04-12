@@ -140,9 +140,26 @@ class PdiaCalendarController extends ControllerBase {
         }
     }
 
-    $caminho_svg = '/' . \Drupal::service('extension.list.module')->getPath('mikedelta_pdia') . '/assets/svg/file-pdf.svg';
+    $fundo_ativo = $config->get('fundo_ativo') !== NULL ? $config->get('fundo_ativo') : TRUE;
+    $fundo_opacidade = $config->get('fundo_opacidade') ?? '0.88';
+    $fundo_imagens_fids = $config->get('fundo_imagens') ?? [];
+    
+    $imagens_fundo_urls = [];
+    if (!empty($fundo_imagens_fids)) {
+      $arquivos_img = \Drupal\file\Entity\File::loadMultiple($fundo_imagens_fids);
+      foreach ($arquivos_img as $img) {
+        if ($img) {
+          $imagens_fundo_urls[] = \Drupal::service('file_url_generator')->generateAbsoluteString($img->getFileUri());
+        }
+      }
+    }
 
+    $caminho_svg = '/' . \Drupal::service('extension.list.module')->getPath('mikedelta_pdia') . '/assets/svg/file-pdf.svg';
     $is_logged_in = \Drupal::currentUser()->isAuthenticated();
+    $url_config = '';
+    if ($is_logged_in) {
+      $url_config = \Drupal\Core\Url::fromRoute('mikedelta_pdia.admin_calendar')->toString();
+    }
 
     $dados_frontend = [
       'arquivos' => $arquivos_por_data,
@@ -153,7 +170,10 @@ class PdiaCalendarController extends ControllerBase {
       'ano_base' => $ano_atual,
       'icone_pdf' => $caminho_svg,
       'is_logged_in' => $is_logged_in,
-      'url_config' => \Drupal\Core\Url::fromRoute('mikedelta_pdia.admin_calendar')->toString(),
+      'url_config' => $url_config,
+      'fundo_ativo' => $fundo_ativo,
+      'fundo_opacidade' => $fundo_opacidade,
+      'imagens_fundo' => $imagens_fundo_urls,
     ];
 
     $build = [];

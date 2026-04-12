@@ -45,6 +45,11 @@
           const mesIndex = monthNames.indexOf(mesTexto) + 1;
           const prefixoData = `${anoTexto}-${String(mesIndex).padStart(2, '0')}`;
 
+          const tituloModalLicencas = document.querySelector('#pdia-modal-title');
+          if (tituloModalLicencas) {
+            tituloModalLicencas.textContent = `Controle de Licenças do Mês: ${mesTexto}/${anoTexto}`;
+          } 
+
           let temLicenca = false;
 
           for (const [data, nome] of Object.entries(licencas)) {
@@ -93,13 +98,20 @@
             return; 
           }
 
-          // 1. VALIDAÇÃO DE FERIADO (Regra de Negócio)
+          // 1. VALIDAÇÃO DE FERIADO
           const [y, m, d] = dataSel.split('-');
           const monthDayStr = `${m}-${d}`;
+          const dataObj = new Date(y, m - 1, d);
+          const diaDaSemana = dataObj.getDay();
+
+          if (diaDaSemana === 0 || diaDaSemana === 6) {
+            alert(`Ação bloqueada: O dia ${d}/${m}/${y} cai em um Final de Semana.\n\nNão é permitido registrar licenças aos sábados e domingos.`);
+            return;
+          }
 
           if (nacionais[dataSel] || especificos[dataSel] || regionais[monthDayStr]) {
             alert(`Ação bloqueada: O dia ${d}/${m}/${y} já está reservado como Feriado ou Ponto Facultativo.\n\nNão é permitido sobrepor uma licença a um feriado.`);
-            return; // Interrompe a execução aqui
+            return;
           }
 
           let tipoSel = document.querySelector('input[name="tipo_evento"]:checked').value;
@@ -107,12 +119,10 @@
             tipoSel = inputOutros.value.trim();
           }
 
-          // 2. CONFIRMAÇÃO DE SALVAMENTO
           if (!confirm(`Confirma o agendamento de:\n\nEvento: ${tipoSel}\nData: ${d}/${m}/${y}?`)) {
-            return; // Cancela se o usuário clicar em "Não/Cancelar"
+            return;
           }
 
-          // 3. SE PASSOU POR TUDO, ENVIA PARA O SERVIDOR
           fetch('/admin/api/md-pdia/salvar-licenca', {
             method: 'POST',
             body: JSON.stringify({ date: dataSel, name: tipoSel }),

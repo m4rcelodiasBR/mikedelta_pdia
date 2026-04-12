@@ -27,6 +27,7 @@ use Drupal\file\Entity\File;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\Core\Render\Markup;
+use Drupal\Core\Url;
 
 class PdiaImportExportForm extends FormBase {
 
@@ -41,9 +42,31 @@ class PdiaImportExportForm extends FormBase {
 
   public function buildForm(array $form, FormStateInterface $form_state) {
 
+    $form['admin_actions'] = [
+      '#type' => 'container',
+      '#attributes' => [
+        'style' => 'display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 20px;',
+      ],
+      '#weight' => -100,
+    ];
+
+    $form['admin_actions']['ir_calendario'] = [
+      '#title' => $this->t('Ir para o Plano do Dia'),
+      '#type' => 'link',
+      '#url' => Url::fromRoute('mikedelta_pdia.calendar'),
+      '#attributes' => ['class' => ['button', 'button--primary', 'btn', 'btn-primary']],
+    ];
+
+    $form['admin_actions']['ajuda'] = [
+      '#title' => $this->t('Ajuda do Módulo'),
+      '#type' => 'link',
+      '#url' => Url::fromRoute('help.page', ['name' => 'mikedelta_pdia']),
+      '#attributes' => ['class' => ['button', 'btn', 'btn-secondary']],
+    ];
+
     if (!class_exists('\ZipArchive')) {
       $mensagem = '<strong>ERRO CRÍTICO DE SERVIDOR: A extensão "ZipArchive" do PHP não está instalada ou ativada.</strong><br><br>';
-      $mensagem .= 'As rotinas de Importação e Exportação exigem a manipulação de arquivos .zip. Para liberar o acesso a esta tela, acesse o terminal do seu servidor, instale a biblioteca e reinicie o serviço web. Exemplos de comandos por distribuição:<br><br>';
+      $mensagem .= 'As rotinas de Importação e Exportação exigem a manipulação de arquivos .zip. Para liberar o acesso a esta tela, acesse o terminal do seu servidor, instale a biblioteca <em>php-zip</em> e reinicie o serviço web. Exemplos de comandos por distribuição:<br><br>';
       $mensagem .= '<ul style="background: #f8d7da; border: 1px solid #f5c6cb; padding: 15px 15px 15px 35px; border-radius: 4px; color: #721c24;">';
       $mensagem .= '<li style="margin-bottom: 8px;"><strong>Oracle Linux / RHEL / AlmaLinux:</strong><br><code>sudo dnf install php-zip -y && sudo systemctl restart php-fpm</code></li>';
       $mensagem .= '<li style="margin-bottom: 8px;"><strong>Ubuntu / Debian:</strong><br><code>sudo apt-get install php-zip -y && sudo systemctl restart apache2</code> (ou <code>php-fpm</code>)</li>';
@@ -57,7 +80,7 @@ class PdiaImportExportForm extends FormBase {
     $scheme = $this->getScheme();
 
     // ==========================================
-    // SEÇÃO 1: IMPORTAÇÃO DE DADOS (UPLOAD ZIP)
+    // IMPORTAÇÃO DE DADOS (UPLOAD ZIP)
     // ==========================================
     $form['importacao'] = [
       '#type' => 'details',
@@ -95,7 +118,7 @@ class PdiaImportExportForm extends FormBase {
     ];
 
     // ==========================================
-    // SEÇÃO 2: EXPORTAÇÃO DE BACKUP
+    // EXPORTAÇÃO DE BACKUP
     // ==========================================
     $form['exportacao'] = [
       '#type' => 'details',
@@ -150,7 +173,7 @@ class PdiaImportExportForm extends FormBase {
   }
 
   // ==========================================
-  // FUNÇÃO: EXECUTAR EXPORTAÇÃO
+  // EXECUTAR EXPORTAÇÃO
   // ==========================================
   public function submitExport(array &$form, FormStateInterface $form_state) {
     $ano = $form_state->getValue('ano_export');
@@ -252,7 +275,7 @@ class PdiaImportExportForm extends FormBase {
   }
 
   // ==========================================
-  // FUNÇÃO: EXECUTAR IMPORTAÇÃO
+  // EXECUTAR IMPORTAÇÃO
   // ==========================================
   public function submitImport(array &$form, FormStateInterface $form_state) {
     $file_id_array = $form_state->getValue('arquivo_zip');
@@ -387,12 +410,10 @@ class PdiaImportExportForm extends FormBase {
     $messenger = \Drupal::messenger();
     $file_system = \Drupal::service('file_system');
 
-    // Remove a pasta temporária extraída
     if (isset($results['extract_dir_uri'])) {
       $file_system->deleteRecursive($results['extract_dir_uri']);
     }
     
-    // Deleta o ficheiro ZIP original enviado pelo usuário
     if (isset($results['zip_file_id'])) {
       $file = File::load($results['zip_file_id']);
       if ($file) {

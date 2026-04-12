@@ -1,8 +1,12 @@
+.container.d-flex.flex-column {
+    gap: 10px !important;
+}
+
 .pdia-container {
   width: 100%;
   background: #fff;
   border-radius: 0.5rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
   padding: 1rem;
   box-sizing: border-box;
 }
@@ -13,7 +17,7 @@
   align-items: center;
   margin-bottom: 1.25rem;
   background: #003366;
-  color: white;
+  color: #fff;
   padding: 10px 20px;
   border-radius: 0.5rem;
 }
@@ -22,7 +26,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: white;
+  color: #fff;
 }
 
 .pdia-btn:hover {
@@ -36,10 +40,16 @@
   text-align: center;
 }
 
+.pdia-grid-header {
+  margin-bottom: 0.3rem;
+}
+
 .pdia-grid-header div {
+  background-color: rgba(250, 250, 250, 0.7);
+  border-radius: 0.4rem;
   font-weight: bold;
-  padding: 10px 0;
-  color: #003366;
+  padding: .4rem 0;
+  color: #084298;
   text-transform: uppercase;
   font-size: .8rem;
 }
@@ -48,29 +58,31 @@
   position: relative;
   padding: 25px 8px 8px 8px !important;
   border-radius: 0.4rem;
-  background-color: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(3px);
+  background-color: rgba(250, 250, 250, 0.7);
   min-height: 80px;
-  border: 1px solid rgba(222, 226, 230, 0.8);
   transition: all 0.2s ease-in-out;
+}
+
+.pdia-day,
+.pdia-grid-header div,
+.pdia-year-controls,
+.pdia-month-controls,
+.pdia-btn-primary,
+.pdia-input,
+.pdia-day.dia-atual {
+  box-shadow: 1px 1px 3px #777;
 }
 
 .pdia-day .dia-numero {
   position: absolute;
   top: 6px;
   left: 8px;
-  font-size: 0.8em;
+  font-size: 0.7rem;
   font-weight: bold;
-  color: #555;
 }
 
 .pdia-day.dia-atual {
-  box-shadow: inset 0px 0px 0px 3px #0056b3 !important; /* Borda interna azul */
-}
-
-.pdia-day.dia-atual .dia-numero {
-  color: #0056b3;
-  font-size: 0.95em;
+  background-color: #FAB932 !important;
 }
 
 .conteudo-celula {
@@ -89,20 +101,32 @@
 .pdia-day.has-pdf {
   background-color: rgba(227, 242, 253, 0.6);
   border-color: #90caf9;
-  border-left: 4px solid #1976d2;
+  border-left: 4px solid #d32f2f;
   cursor: pointer;
 }
 
+.pdia-day-other-month {
+  background-color: rgba(200, 200, 200, 0.7);
+}
+
+.pdia-day-other-month .dia-numero {
+  color: #6E7B8B;
+  font-weight: normal;
+}
+
+.pdia-btn-icon:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
+
 .pdia-weekend {
-  background-color: rgba(255, 235, 238, 0.6);
-  border-color: #ffcdd2;
-  color: #c62828;
+  background-color: rgba(255, 210, 210, 0.7) !important;
+  color: #c62828 !important; 
 }
 
 .pdia-license {
-  background-color: rgba(255, 249, 196, 0.6);
-  border-color: #fff59d;
-  cursor: help;
+  background-color: rgba(135, 206, 250, 0.7) !important; 
+  cursor: help !important;
 }
 
 .pdia-pdf-link {
@@ -110,19 +134,27 @@
   color: #d32f2f;
 }
 
+.pdia-pdf-text {
+  font-size: 0.55rem;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1.1;
+  margin-top: 1px;
+  color: #d32f2f;
+}
+
 /* Estilo unificado para as etiquetas de Feriado/Licença */
 .pdia-tag {
   display: block;
-  font-size: 11px;
-  color: #f57f17;
+  color: #084298;
   margin-top: 5px;
   text-align: center;
   font-weight: bold;
-  line-height: 1.2;
+  font-size: .6rem;
 }
 
 .pdf-pdia-icon {
-  width: 1.5rem;
+  width: 1.2rem;
   filter: invert(17%) sepia(87%) saturate(3620%) hue-rotate(345deg)
     brightness(88%) contrast(97%);
   margin-top: 5px;
@@ -138,20 +170,15 @@
   padding: .1rem;
   border-radius: 0.4rem;
   margin-bottom: .3rem;
-  background-color: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(3px);
+  background-color: rgba(250, 250, 250, 0.7);
 }
 
 .pdia-title-large {
   font-size: 1.2rem;
-  font-weight: bold;
-  color: #003366;
 }
 
 .pdia-title-medium {
   font-size: .95rem;
-  font-weight: bold;
-  color: #003366;
 }
 
 .pdia-btn-icon {
@@ -159,8 +186,14 @@
   border: none;
   font-size: 20px;
   cursor: pointer;
-  color: #003366;
   padding: 5px 15px;
+}
+
+.pdia-title-large,
+.pdia-title-medium,
+.pdia-btn-icon {
+  color: #084298;
+  font-weight: bold;
 }
 
 .pdia-btn-icon:hover {
@@ -201,7 +234,7 @@
 
 .pdia-btn-primary {
   background-color: #084298;
-  color: white;
+  color: #fff;
   border: none;
   padding: .3rem 1rem;
   border-radius: 0.4rem;
@@ -216,16 +249,12 @@
   background-color: #063170;
 }
 
-/* Legenda */
 .pdia-legend {
-  margin-top: 15px;
-  font-size: 14px;
-  color: #555;
+  font-size: .8rem;
   display: flex;
   align-items: center;
   gap: 8px;
   font-weight: 700;
-  backdrop-filter: blur(3px);
 }
 
 /* Efeito Célula Clicável */
@@ -233,13 +262,11 @@
   transform: scale(1.02);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 10;
-  border-color: #1976d2;
 }
 
 .pdia-top-actions {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 10px;
 }
 
 .pdia-btn-bono {
@@ -247,12 +274,12 @@
   justify-content: center;
   align-items: center;
   gap: 8px;
-  width: 40%;
+  width: 100%;
   min-width: 150px;
   background-color: #084298;
   color: #ffffff !important;
   text-decoration: none;
-  padding: .3rem 1rem;
+  padding: .5rem 1rem;
   border-radius: 0.4rem;
   font-size: .8rem;
   border: none;

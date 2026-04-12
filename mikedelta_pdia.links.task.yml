@@ -2,7 +2,7 @@ mikedelta_pdia.admin_calendar_tab:
   route_name: mikedelta_pdia.admin_calendar
   base_route: mikedelta_pdia.admin_calendar
   title: 'Ver Calendário'
-  weight: 10
+  weight: 30
 
 mikedelta_pdia.settings_tab:
   route_name: mikedelta_pdia.settings
@@ -14,4 +14,4 @@ mikedelta_pdia.import_export_tab:
   route_name: mikedelta_pdia.import_export_page
   base_route: mikedelta_pdia.admin_calendar
   title: 'Importar/Exportar'
-  weight: 30
+  weight: 10
