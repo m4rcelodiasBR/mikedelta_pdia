@@ -50,15 +50,24 @@ function mikedelta_pdia_help($route_name, RouteMatchInterface $route_match) {
 
       $output .= '<h4>' . t('Aba: Ver Calendário (Gestão de Licenças)') . '</h4>';
       $output .= '<p>' . t('É o espelho do que é exibido aos usuários finais. O principal recurso desta seção é o <strong>Controle de Licenças</strong>. Ao adicionar um evento (como Licença Pagamento ou Rotina Administrativa), o sistema marca o dia no calendário. Use-o com responsabilidade e somente para este fim.') . '</p>';
+      $output .= '<ol>';
+      $output .= '<li>' . t('Para gerenciar Licença, clique no botão <strong>Gerenciar Licenças</strong>. Será exibido uma janela flutuante.') . '</li>';
+      $output .= '<li>' . t('Selecione uma data para o evento.') . '</li>';
+      $output .= '<li>' . t('Marque o Tipo de Evento pré-definido ou marque <em>Outros</em> e escreva o evento específico.') . '</li>';
+      $output .= '<li>' . t('Clique em <strong>Salvar Licença</strong>. Uma janela de confirmação será exibido. Confira e clique em OK para salvar.') . '</li>';
+      $output .= '<li>' . t('Seu evento será exibido imediatamente no calendário.') . '</li>';
+
+      $output .= '</ol>';
       $output .= '<ul>';
-      $output .= '<li>' . t('<strong>Regra:</strong> O sistema bloqueará automaticamente qualquer tentativa de cadastrar uma licença em um dia já classificado como Feriado, Ponto Facultativo ou fim de semana.') . '</li>';
+      $output .= '<li>' . t('<strong>Obs 1:</strong> O sistema bloqueará automaticamente qualquer tentativa de cadastrar uma licença em um dia já classificado como Feriado, Ponto Facultativo ou fim de semana.') . '</li>';
+      $output .= '<li>' . t('<strong>Obs 2:</strong> Ao escolher uma data que já tenha uma licença reservada, está será sobrescrita pelo novo evento definido - Modo Edição.') . '</li>';
       $output .= '</ul>';
 
       $output .= '<h3>' . t('Inserindo e Excluindo PDFs') . '</h3>';
       $output .= '<p>' . t('Para disponibilizar um novo Plano do Dia:') . '</p>';
       $output .= '<ol>';
       $output .= '<li>' . t('Acesse <em>Conteúdo > Adicionar conteúdo > Plano do Dia (MikeDelta PDia)</em>.') . '</li>';
-      $output .= '<li>' . t('Insira a Data do referido Plano do Dia. O sistema ignora qualquer título digitado e o reescreve automaticamente para o padrão "Plano do Dia - DD/MM/AAAA".') . '</li>';
+      $output .= '<li>' . t('Defina o título, insira a Data do referido Plano do Dia. O sistema ignora qualquer título digitado e o reescreve automaticamente para o padrão "Plano do Dia - DD/MM/AAAA".') . '</li>';
       $output .= '<li>' . t('Anexe o PDF e salve. O sistema renomeará o arquivo físico no servidor para <code>PD-DDMMAAAA.pdf</code> e garantirá que ele não seja exibido indevidamente na página inicial do seu site.') . '</li>';
       $output .= '</ol>';
       $output .= '<p>' . t('Para <strong>Excluir</strong>, basta buscar a publicação na lista de conteúdos geral do Drupal e apagá-la. O PDF desaparecerá imediatamente do calendário.') . '</p>';
