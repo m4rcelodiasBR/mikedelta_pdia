@@ -64,14 +64,6 @@ class PdiaCalendarController extends ControllerBase {
         }
     }
 
-    $feriados_custom_str = $config->get('feriados_custom');
-    if (!empty($feriados_custom_str)) {
-        $feriados_custom = json_decode($feriados_custom_str, TRUE) ?? [];
-        if (is_array($feriados_custom)) {
-            $feriados = array_merge($feriados, $feriados_custom);
-        }
-    }
-
     // --- LÓGICA DE FERIADOS ---
     $feriados_nacionais = [];
     

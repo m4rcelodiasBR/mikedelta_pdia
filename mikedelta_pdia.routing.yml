@@ -32,6 +32,7 @@ mikedelta_pdia.api_save_license:
     _controller: '\Drupal\mikedelta_pdia\Controller\PdiaApiController::salvarLicenca'
   requirements:
     _permission: 'administrar mikedelta pdia'
+    _csrf_request_header_token: 'TRUE'
   methods: [POST]
 
 # API AJAX para Apagar Licenças
@@ -41,6 +42,7 @@ mikedelta_pdia.api_delete_license:
     _controller: '\Drupal\mikedelta_pdia\Controller\PdiaApiController::apagarLicenca'
   requirements:
     _permission: 'administrar mikedelta pdia'
+    _csrf_request_header_token: 'TRUE'
   methods: [POST]
 
 # Rota para o formulário de Importação

@@ -30,7 +30,7 @@ Nascido para facilitar a operação do setor responsável, este módulo elimina 
 5. Na seção `Definições Gerais`, adicione os Feriados Regionais ou Pontos Facultativos exclusivos da sua OM em formato de texto simples.
 6. Na seção `Ver Calendário`, utilize a opção `Gerenciar Licenças` para adicionar, editar ou remover licenças relacionadas e exclusivas da MB ou sua OM.
 
-\*Nota:\_ Nesta tela ficará exibindo as licenças relacionadas ao mês em que você esta navegando.
+* *Nota:* Nesta tela ficará exibindo as licenças relacionadas ao mês em que você esta navegando.
 
 ## Personalização
 
@@ -49,7 +49,7 @@ Na seção `Importar/Exportar` você poderá fazer backups ou restauração dos 
 
 - **Para Exportar (ou Backup):**
 
-\*Nota:\_ O sistema vai listar os anos em que existem Planos do Dia publicados. O agrupamento por ano é menos oneroso para o servidor e não afeta a performance durante o processo.
+* *Nota:* O sistema vai listar os anos em que existem Planos do Dia publicados. O agrupamento por ano é menos oneroso para o servidor e não afeta a performance durante o processo.
 
 1. Selecione na lista o ano que deseja fazer a exportação.
 2. Clique em `Gerar Arquivo ZIP`.

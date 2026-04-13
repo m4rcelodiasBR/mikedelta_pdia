@@ -10,12 +10,10 @@
         const btnOpen = document.getElementById('btn-open-modal-licencas');
         const btnClose = document.getElementById('btn-close-modal');
         const form = document.getElementById('form-licenca-admin');
-        const radioOutros = document.getElementById('radio-outros');
         const inputOutros = document.getElementById('admin-licenca-outro');
         const listaContainer = document.getElementById('lista-licencas-container');
         const listaUl = document.getElementById('lista-licencas-mes');
 
-        // Carregando todas as datas do calendário para validação
         const licencas = settings.mikedeltaPdia.licencas || {};
         const nacionais = settings.mikedeltaPdia.nacionais || {};
         const regionais = settings.mikedeltaPdia.regionais || {};
@@ -77,12 +75,17 @@
           if (e.target.classList.contains('btn-excluir')) {
             const dataExcluir = e.target.getAttribute('data-date');
             if (confirm(`Excluir o evento do dia ${dataExcluir}?`)) {
-              fetch('/admin/api/md-pdia/apagar-licenca', {
-                method: 'POST',
-                body: JSON.stringify({ date: dataExcluir }),
-                headers: { 'Content-Type': 'application/json' }
-              }).then(res => res.json()).then(data => {
-                if(data.status === 'success') location.reload();
+              fetch('/session/token').then(res => res.text()).then(token => {
+                fetch('/admin/api/md-pdia/apagar-licenca', {
+                  method: 'POST',
+                  body: JSON.stringify({ date: dataExcluir }),
+                  headers: { 
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': token
+                  }
+                }).then(res => res.json()).then(data => {
+                  if(data.status === 'success') location.reload();
+                });                
               });
             }
           }
@@ -123,16 +126,21 @@
             return;
           }
 
-          fetch('/admin/api/md-pdia/salvar-licenca', {
-            method: 'POST',
-            body: JSON.stringify({ date: dataSel, name: tipoSel }),
-            headers: { 'Content-Type': 'application/json' }
-          }).then(res => res.json()).then(data => {
-            if(data.status === 'success') {
-              location.reload(); 
-            } else {
-              alert(data.message);
-            }
+          fetch('/session/token').then(res => res.text()).then(token => {
+            fetch('/admin/api/md-pdia/salvar-licenca', {
+              method: 'POST',
+              body: JSON.stringify({ date: dataSel, name: tipoSel }),
+              headers: { 
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': token
+              }
+            }).then(res => res.json()).then(data => {
+              if(data.status === 'success') {
+                location.reload(); 
+              } else {
+                alert(data.message);
+              }
+            });            
           });
         });
       });

@@ -11,6 +11,7 @@
   box-sizing: border-box;
 }
 
+/*
 .pdia-header {
   display: flex;
   justify-content: space-between;
@@ -32,6 +33,8 @@
 .pdia-btn:hover {
   color: #82b1ff;
 }
+*/
+
 .pdia-grid-header,
 .pdia-grid {
   display: grid;
@@ -129,10 +132,12 @@
   cursor: help !important;
 }
 
+/*
 .pdia-pdf-link {
   margin-top: auto;
   color: #d32f2f;
 }
+*/
 
 .pdia-pdf-text {
   font-size: 0.55rem;
