@@ -32,7 +32,7 @@ Nascido para facilitar a operação do setor responsável, este módulo elimina 
 
 * *Nota:* Nesta tela ficará exibindo as licenças relacionadas ao mês em que você esta navegando.
 
-## Personalização
+## 🎨 Personalização
 
 1. Na tela de `Definições Gerais` é possível aplicar planos de fundo pro calendário upando arquivos de imagens limitados a 1MB cada um e com um limite máximo de 8 imagens.
 2. É possível ajustar o brilho dessas imagens de fundo.
@@ -55,7 +55,7 @@ Na seção `Importar/Exportar` você poderá fazer backups ou restauração dos 
 2. Clique em `Gerar Arquivo ZIP`.
 3. Aguarde o processo. Ao final será habilitado o botão para download do arquivo. Guarde este arquivo em caso de necessidade de uma possível restauração dos arquivos deste módulo.
 
-## Feedback e evolução
+## 💬 Feedback e evolução
 
 Utilize com responsabilidade este módulo e quaisquer bugs encontrados, melhorias, erros reporte para `dias.marcelo@marinha.mil.br`. Seu feedback é importante para a constante melhoria deste projeto.
 
@@ -65,4 +65,18 @@ Este projeto é um software livre licenciado sob a Licença Pública Geral GNU (
 
 Desenvolvido no contexto de modernização sistêmica para a Marinha do Brasil por Marcelo Dias da Silva.
 
-## Downloads
+## 📜 Histórico de Versões
+
+### [1.0.0] - 2026-04-12
+* 🎉 **Lançamento Oficial:** Primeira versão estável do módulo MikeDelta PDia.
+* ✨ **Independência:** Este módulo não depende de nenhum outro como dependência para funcionar. Desde o Tipo de Conteúdo específico até a renderização do calendário próprio.
+* 🔒 **Segurança (Enterprise):** Implementação de token CSRF para blindagem das rotas AJAX de gerenciamento de licenças.
+* ⚙️ **Arquitetura e Limpeza:** Criação do arquivo `.install` com `hook_uninstall` para higienização profunda do banco de dados e exclusão de imagens físicas no servidor ao desinstalar.
+* 📅 **Regras de Negócio:** Trava inteligente nativa que impede matematicamente o agendamento de licenças em feriados e finais de semana.
+* 🖼️ **Gestão de Mídia:** Otimização da Form API para suportar o upload e a renomeação de até 8 imagens de fundo simultâneas (`wall-N.ext`).
+* 🎨 **UI/UX e Interatividade:** Calendário responsivo reformulado com destaque sólido para o dia atual, dias da semana em estilo *Glassmorphism*, preenchimento de meses adjacentes e modal administrativo com título dinâmico.
+
+## 💾 Downloads
+
+- [mikedelta_pdia-v1.0.0.zip](https://github.com/m4rcelodiasBR/mikedelta_pdia/archive/refs/tags/v1.0.0.zip)
+- [mikedelta_pdia-v1.0.0.tar.gz](https://github.com/m4rcelodiasBR/mikedelta_pdia/archive/refs/tags/v1.0.0.tar.gz)
