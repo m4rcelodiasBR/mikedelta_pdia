@@ -56,9 +56,10 @@
               const [y, m, d] = data.split('-');
               const li = document.createElement('li');
               li.innerHTML = `
-                <span><strong>${d}/${m}/${y}</strong> - ${nome}</span>
+                <span><strong>${d}/${m}/${y}</strong> - <span class="nome-licenca"></span></span>
                 <button type="button" class="btn-excluir" data-date="${data}">Excluir</button>
               `;
+              li.querySelector('.nome-licenca').textContent = nome;
               listaUl.appendChild(li);
             }
           }

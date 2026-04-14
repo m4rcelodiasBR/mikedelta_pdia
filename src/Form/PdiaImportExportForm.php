@@ -304,13 +304,21 @@ class PdiaImportExportForm extends FormBase {
 
     $zip = new \ZipArchive();
     if ($zip->open($zip_path) === TRUE) {
-      $zip->extractTo($extract_path);
+      for ($i = 0; $i < $zip->numFiles; $i++) {
+        $filename = $zip->getNameIndex($i);
+        $safe_filename = basename($filename);
+        if (preg_match('/^PD-\d{8}\.pdf$/i', $safe_filename)) {
+          $content = $zip->getFromIndex($i);
+          if ($content !== FALSE) {
+            file_put_contents($extract_path . '/' . $safe_filename, $content);
+          }
+        }
+      }
       $zip->close();
     } else {
       $this->messenger()->addError("Não foi possível ler o arquivo ZIP. Ele pode estar corrompido.");
       return;
     }
-
 
     $arquivos = $file_system->scanDirectory($extract_dir_uri, '/\.pdf$/i');
     $valid_files = [];

@@ -72,18 +72,25 @@
 
             if (currentDayOfWeek === 0 || currentDayOfWeek === 6) { dayDiv.classList.add('pdia-weekend'); }
 
+            const addSafeTag = (textoTag) => {
+              const smallTag = document.createElement('small');
+              smallTag.className = 'pdia-tag';
+              smallTag.textContent = textoTag; 
+              conteudoDiv.appendChild(smallTag);
+            };
+
             if (licencas[dateStr]) {
               dayDiv.classList.add('pdia-license'); dayDiv.setAttribute('title', 'Licença MB');
-              conteudoDiv.innerHTML += `<small class="pdia-tag">${licencas[dateStr]}</small>`;
+              addSafeTag(licencas[dateStr]);
             } else if (especificos[dateStr]) {
               dayDiv.classList.add('pdia-license'); dayDiv.setAttribute('title', 'Feriado Específico');
-              conteudoDiv.innerHTML += `<small class="pdia-tag">${especificos[dateStr]}</small>`;
+              addSafeTag(especificos[dateStr]);
             } else if (regionais[monthDayStr]) {
               dayDiv.classList.add('pdia-license'); dayDiv.setAttribute('title', 'Feriado Regional');
-              conteudoDiv.innerHTML += `<small class="pdia-tag">${regionais[monthDayStr]}</small>`;
+              addSafeTag(regionais[monthDayStr]);
             } else if (nacionais[dateStr]) {
               dayDiv.classList.add('pdia-license'); dayDiv.setAttribute('title', 'Feriado Nacional');
-              conteudoDiv.innerHTML += `<small class="pdia-tag">${nacionais[dateStr]}</small>`;
+              addSafeTag(nacionais[dateStr]);
             }
 
             if (arquivos[dateStr]) {
