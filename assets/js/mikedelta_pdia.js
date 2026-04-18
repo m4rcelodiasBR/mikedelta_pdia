@@ -14,7 +14,7 @@
         const especificos = dados.especificos || {};
         const iconePdf = dados.icone_pdf || '';
         const fundoAtivo = dados.fundo_ativo ?? true;
-        const opacidadeFundo = dados.fundo_opacidade ?? '0.88';
+        const opacidadeFundo = dados.fundo_opacidade ?? '0.8';
         const imagensFundo = dados.imagens_fundo || [];
         const dataDeHoje = new Date();
         const stringHoje = `${dataDeHoje.getFullYear()}-${String(dataDeHoje.getMonth() + 1).padStart(2, '0')}-${String(dataDeHoje.getDate()).padStart(2, '0')}`;
@@ -133,18 +133,21 @@
 
         renderCalendar();
 
-        // Aplicador de Imagem de Fundo Inteligente
+        const fundoCor = dados.fundo_cor || 'transparent';
+        const alphaHex = Math.round(parseFloat(opacidadeFundo) * 255).toString(16).padStart(2, '0');
         const pdiaContainer = document.querySelector('.pdia-container');
+        
         if (pdiaContainer && !pdiaContainer.dataset.bgSet && fundoAtivo && imagensFundo.length > 0) {
           const imagemSorteada = imagensFundo[Math.floor(Math.random() * imagensFundo.length)];
-          pdiaContainer.style.backgroundImage = `linear-gradient(rgba(255, 255, 255, ${opacidadeFundo}), rgba(255, 255, 255, ${opacidadeFundo})), url('${imagemSorteada}')`;
+          pdiaContainer.style.backgroundImage = `linear-gradient(#ffffff${alphaHex}, #ffffff${alphaHex}), url('${imagemSorteada}')`;
           pdiaContainer.style.backgroundSize = 'cover';
           pdiaContainer.style.backgroundPosition = 'center';
           pdiaContainer.style.backgroundRepeat = 'no-repeat';
           pdiaContainer.style.backgroundColor = 'transparent';
           pdiaContainer.dataset.bgSet = 'true'; 
-        } else if (pdiaContainer && !fundoAtivo) {
-          pdiaContainer.style.background = '#c1c1c1';
+        } else if (pdiaContainer) {
+          const fundoCor = dados.fundo_cor || '#ffffff';
+          pdiaContainer.style.background = fundoCor + alphaHex;
         }
       });
     }

@@ -1,5 +1,5 @@
 pdia_calendar_assets:
-  version: 1.0.0
+  version: 1.0.1
   css:
     component:
       assets/css/mikedelta_pdia.css: {}
@@ -10,7 +10,7 @@ pdia_calendar_assets:
     - core/once
 
 pdia_admin_assets:
-  version: 1.0.0
+  version: 1.0.1
   css:
     component:
       assets/css/mikedelta_pdia_admin.css: {}

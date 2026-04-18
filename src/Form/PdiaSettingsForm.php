@@ -86,7 +86,7 @@ class PdiaSettingsForm extends ConfigFormBase
       '#markup' => '
         <div>
           <h4>Feriados Regionais e Pontos Facultativos</h4>
-          <p>O motor do sistema já calcula matematicamente todos os <strong>Feriados Nacionais</strong> para qualquer ano. Utilize este campo <strong>apenas</strong> para adicionar datas exclusivas da sua localidade ou da sua OM.</p>
+          <p>O motor do sistema já calcula matematicamente todos os <strong>Feriados Nacionais</strong> para qualquer ano. Utilize este campo <strong>apenas</strong> para adicionar datas exclusivas da Marinha do Brasil, sua localidade ou OM.</p>
           <p><strong>Regras de preenchimento:</strong> Insira um evento por linha, separando a data do nome por uma barra vertical ( <strong>|</strong> ).</p>
           <ul>
             <li>Para repetir <strong>todos os anos</strong>, digite apenas Dia e Mês: <code>DD/MM | Nome do Feriado</code></li>
@@ -118,6 +118,18 @@ class PdiaSettingsForm extends ConfigFormBase
       '#default_value' => $config->get('fundo_ativo') ?? TRUE,
     ];
 
+    $form['configuracoes_fundo']['fundo_cor'] = [
+      '#type' => 'color',
+      '#title' => $this->t('Cor de Fundo'),
+      '#default_value' => $config->get('fundo_cor') ?? 'transparent',
+      '#description' => $this->t('Esta cor será aplicada como fundo sólido ou translúcido (conforme brilho abaixo).'),
+      '#states' => [
+        'visible' => [
+          ':input[name="fundo_ativo"]' => ['checked' => FALSE],
+        ],
+      ],
+    ];
+
     $form['configuracoes_fundo']['fundo_opacidade'] = [
       '#type' => 'select',
       '#title' => $this->t('Brilho'),
@@ -136,10 +148,18 @@ class PdiaSettingsForm extends ConfigFormBase
         '1' => '100%'
       ],
       '#default_value' => $config->get('fundo_opacidade') ?? '0.8',
-      '#states' => ['visible' => [':input[name="fundo_ativo"]' => ['checked' => TRUE]]],
     ];
 
-    $form['configuracoes_fundo']['fundo_imagens'] = [
+    $form['configuracoes_fundo']['grupo_imagens'] = [
+      '#type' => 'container',
+      '#states' => [
+        'visible' => [
+          ':input[name="fundo_ativo"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
+
+    $form['configuracoes_fundo']['grupo_imagens']['fundo_imagens'] = [
       '#type' => 'managed_file',
       '#title' => $this->t('Upload de Imagens de Fundo'),
       '#description' => $this->t('Faça o upload de até 8 imagens diferentes (Tamanho máximo: 1MB/arquivo). Formatos aceitos: JPG, JPEG ou PNG.'),
@@ -150,11 +170,10 @@ class PdiaSettingsForm extends ConfigFormBase
       ],
       '#upload_location' => 'public://md_pdia_walls/',
       '#default_value' => $fundo_imagens_limpo,
-      '#states' => ['visible' => [':input[name="fundo_ativo"]' => ['checked' => TRUE]]],
       '#element_validate' => ['::validarQuantidadeImagens'],
     ];
 
-    $form['configuracoes_fundo']['observacao_delecao'] = [
+    $form['configuracoes_fundo']['grupo_imagens']['observacao_delecao'] = [
       '#type' => 'markup',
       '#markup' => '
       <p>Ao excluir uma imagem, ela será removida do calendário, porém não será apagada do servidor. Utilize o <a href="/admin/content/files">gerenciamento de arquivos do Drupal</a> para apagar permanentemente o arquivo do servidor.</p>
@@ -244,6 +263,7 @@ class PdiaSettingsForm extends ConfigFormBase
     $config->set('feriados_adicionais', $form_state->getValue('feriados_adicionais'))
       ->set('fundo_ativo', $form_state->getValue('fundo_ativo'))
       ->set('fundo_opacidade', $form_state->getValue('fundo_opacidade'))
+      ->set('fundo_cor', $form_state->getValue('fundo_cor'))
       ->set('fundo_imagens', $new_fids)
       ->save();
       

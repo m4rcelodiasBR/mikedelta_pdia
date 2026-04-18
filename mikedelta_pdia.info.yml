@@ -2,7 +2,7 @@ name: 'MikeDelta PDia'
 type: module
 description: 'Módulo para gerenciamento e exibição do Plano do Dia (PDia). Módulo desenvolvido por Marcelo Dias da Silva.'
 core_version_requirement: ^10 || ^11
-version: '1.0.0'
+version: '1.0.1'
 package: MikeDelta
 configure: mikedelta_pdia.settings
 license: 'GPLv3 or later'

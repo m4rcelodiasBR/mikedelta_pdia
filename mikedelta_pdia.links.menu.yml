@@ -2,5 +2,5 @@ mikedelta_pdia.settings_menu:
   title: 'MikeDelta PDia'
   description: 'Definições gerais, gestão do Plano do Dia e importação de dados.'
   parent: system.admin_config_content
-  route_name: mikedelta_pdia.admin_calendar
+  route_name: mikedelta_pdia.settings
   weight: 100

@@ -31,7 +31,7 @@ function mikedelta_pdia_help($route_name, RouteMatchInterface $route_match) {
       $output = '';
       
       $output .= '<h3>' . t('Sobre o MikeDelta PDia') . '</h3>';
-      $output .= '<p><strong>' . t('Versão:') . '</strong> 1.0.0 <em>(Build: Abril/2026)</em><br>';
+      $output .= '<p><strong>' . t('Versão:') . '</strong> 1.0.1 <em>(Build: Abril/2026)</em><br>';
       $output .= '<strong>' . t('Desenvolvimento:') . '</strong> Marcelo Dias da Silva.</p>';
       $output .= '<p>' . t('O MikeDelta PDia é uma solução que utiliza recursos nativos de alto desempenho do Drupal, projetada para a gestão e distribuição do Plano do Dia em PDF dentro do âmbito interno da Organização Militar. O sistema elimina a necessidade de utilização, configuração e outros recursos que precisam trabalhar em conjunto para que todo este processo funcione perfeitamente. O que fica passível de alguma quebra deste processo caso algum módulo ou recurso fique indisponível ou falhe abruptamente. <strong>Resumindo: Este módulo não depende de outros para funcionar</strong>.') . '</p>';
 

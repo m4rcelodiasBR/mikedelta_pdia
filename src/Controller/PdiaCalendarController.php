@@ -64,12 +64,9 @@ class PdiaCalendarController extends ControllerBase {
         }
     }
 
-    // --- LÓGICA DE FERIADOS ---
     $feriados_nacionais = [];
     
-    // 1. Gera dinamicamente os feriados fixos e móveis para todos os anos (2013 a 2100)
     for ($y = 2013; $y <= 2100; $y++) {
-        // --- Feriados Fixos ---
         $feriados_nacionais["$y-01-01"] = 'Confraternização mundial';
         $feriados_nacionais["$y-04-21"] = 'Tiradentes';
         $feriados_nacionais["$y-05-01"] = 'Dia do trabalho';
@@ -79,36 +76,25 @@ class PdiaCalendarController extends ControllerBase {
         $feriados_nacionais["$y-11-15"] = 'Proclamação da República';
         $feriados_nacionais["$y-12-25"] = 'Natal';
         
-        // O Dia da Consciência Negra passou a ser feriado nacional a partir de 2024
         if ($y >= 2024) {
             $feriados_nacionais["$y-11-20"] = 'Dia da consciência negra';
         }
 
-        // --- Feriados Móveis (Baseados na Páscoa) ---
-        // easter_days() retorna quantos dias depois de 21 de Março cai a Páscoa naquele ano
         $dias_pascoa = easter_days($y);
         $data_pascoa = new \DateTime("$y-03-21");
         $data_pascoa->modify("+$dias_pascoa days");
-        
         $feriados_nacionais[$data_pascoa->format('Y-m-d')] = 'Páscoa';
-        
-        // Carnaval: 47 dias antes da Páscoa
         $carnaval = clone $data_pascoa;
         $feriados_nacionais[$carnaval->modify('-47 days')->format('Y-m-d')] = 'Carnaval';
-        
-        // Sexta-feira Santa: 2 dias antes da Páscoa
         $sexta_santa = clone $data_pascoa;
         $feriados_nacionais[$sexta_santa->modify('-2 days')->format('Y-m-d')] = 'Sexta-feira Santa';
-        
-        // Corpus Christi: 60 dias após a Páscoa
         $corpus_christi = clone $data_pascoa;
         $feriados_nacionais[$corpus_christi->modify('+60 days')->format('Y-m-d')] = 'Corpus Christi';
     }
 
-    // 2. Lê os Adicionais Unificados do Painel
     $texto_adicionais = $config->get('feriados_adicionais');
-    $feriados_regionais = []; // DD/MM (Recorrentes)
-    $feriados_especificos = []; // DD/MM/YYYY (Ano específico)
+    $feriados_regionais = [];
+    $feriados_especificos = [];
 
     if (!empty($texto_adicionais)) {
         $linhas = explode("\n", str_replace("\r", "", $texto_adicionais));
@@ -117,8 +103,7 @@ class PdiaCalendarController extends ControllerBase {
                 list($data_texto, $nome) = explode('|', $linha, 2);
                 $data_texto = trim($data_texto);
                 $nome = trim($nome);
-                
-                // Verifica se é Específico (tem 2 barras) ou Regional (tem 1 barra)
+
                 if (substr_count($data_texto, '/') == 2) {
                     $partes = explode('/', $data_texto); // DD/MM/YYYY
                     $data_formatada = $partes[2] . '-' . str_pad($partes[1], 2, '0', STR_PAD_LEFT) . '-' . str_pad($partes[0], 2, '0', STR_PAD_LEFT);
@@ -150,7 +135,7 @@ class PdiaCalendarController extends ControllerBase {
     $is_logged_in = \Drupal::currentUser()->isAuthenticated();
     $url_config = '';
     if ($is_logged_in) {
-      $url_config = \Drupal\Core\Url::fromRoute('mikedelta_pdia.admin_calendar')->toString();
+      $url_config = \Drupal\Core\Url::fromRoute('mikedelta_pdia.settings')->toString();
     }
 
     $dados_frontend = [
@@ -165,6 +150,7 @@ class PdiaCalendarController extends ControllerBase {
       'url_config' => $url_config,
       'fundo_ativo' => $fundo_ativo,
       'fundo_opacidade' => $fundo_opacidade,
+      'fundo_cor' => $config->get('fundo_cor') ?? '#ffffff',
       'imagens_fundo' => $imagens_fundo_urls,
     ];
 
@@ -175,7 +161,9 @@ class PdiaCalendarController extends ControllerBase {
       '#dados_calendario' => $dados_frontend,
       '#attached' => [
         'library' => ['mikedelta_pdia/pdia_calendar_assets'],
-        'drupalSettings' => ['mikedeltaPdia' => $dados_frontend],
+        'drupalSettings' => [
+          'mikedeltaPdia' => $dados_frontend,
+          ],
       ],
       '#cache' => [
         'tags' => ['node_list:md_pdia', 'config:mikedelta_pdia.settings'],

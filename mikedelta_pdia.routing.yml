@@ -1,4 +1,3 @@
-# Rota pública para usuários finais
 mikedelta_pdia.calendar:
   path: '/md-pdia'
   defaults:
@@ -7,7 +6,6 @@ mikedelta_pdia.calendar:
   requirements:
     _access: 'TRUE'
 
-# Rota restrita para administradores
 mikedelta_pdia.admin_calendar:
   path: '/admin/content/md-pdia/gerenciar'
   defaults:
@@ -16,7 +14,6 @@ mikedelta_pdia.admin_calendar:
   requirements:
     _permission: 'administrar mikedelta pdia'
 
-# Rota do formulário de definições gerais
 mikedelta_pdia.settings:
   path: '/admin/content/md-pdia/definicoes'
   defaults:
@@ -25,7 +22,6 @@ mikedelta_pdia.settings:
   requirements:
     _permission: 'administrar mikedelta pdia'
 
-# API AJAX para Guardar Licenças
 mikedelta_pdia.api_save_license:
   path: '/admin/api/md-pdia/salvar-licenca'
   defaults:
@@ -35,7 +31,6 @@ mikedelta_pdia.api_save_license:
     _csrf_request_header_token: 'TRUE'
   methods: [POST]
 
-# API AJAX para Apagar Licenças
 mikedelta_pdia.api_delete_license:
   path: '/admin/api/md-pdia/apagar-licenca'
   defaults:
@@ -45,7 +40,6 @@ mikedelta_pdia.api_delete_license:
     _csrf_request_header_token: 'TRUE'
   methods: [POST]
 
-# Rota para o formulário de Importação
 mikedelta_pdia.import_export_page:
   path: '/admin/config/content/md-pdia/importar-exportar'
   defaults:
