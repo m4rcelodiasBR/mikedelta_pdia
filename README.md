@@ -65,18 +65,23 @@ Este projeto é um software livre licenciado sob a Licença Pública Geral GNU (
 
 Desenvolvido no contexto de modernização sistêmica para a Marinha do Brasil por Marcelo Dias da Silva.
 
+## 💾 Downloads
+
+- [mikedelta_pdia-v1.1.0.zip](https://github.com/m4rcelodiasBR/mikedelta_pdia/archive/refs/tags/v1.1.0.zip)
+- [mikedelta_pdia-v1.1.0.tar.gz](https://github.com/m4rcelodiasBR/mikedelta_pdia/archive/refs/tags/v1.1.0.tar.gz)
+
 ## 📜 Histórico de Versões
+
+### [1.1.0] - 2026-04-18
+* 🎨 **Personalização Avançada:** Adicionado seletor nativo de cor (ColorPicker) no painel de configurações, permitindo aplicar cores sólidas ou translúcidas ao fundo do calendário.
+* ⚙️ **Navegação Otimizada:** Reorganização estrutural das abas administrativas. A tela de "Definições Gerais" foi promovida a rota principal, tornando-se a primeira aba exibida ao acessar o módulo.
+* 🔒 **Segurança:** Implementações de proteções no frontend para proteção no backend com as melhores práticas para PHP e Drupal.
 
 ### [1.0.0] - 2026-04-12
 * 🎉 **Lançamento Oficial:** Primeira versão estável do módulo MikeDelta PDia.
 * ✨ **Independência:** Este módulo não depende de nenhum outro como dependência para funcionar. Desde o Tipo de Conteúdo específico até a renderização do calendário próprio.
-* 🔒 **Segurança (Enterprise):** Implementação de token CSRF para blindagem das rotas AJAX de gerenciamento de licenças.
+* 🔒 **Segurança:** Implementação de token CSRF para blindagem das rotas AJAX de gerenciamento de licenças.
 * ⚙️ **Arquitetura e Limpeza:** Criação do arquivo `.install` com `hook_uninstall` para higienização profunda do banco de dados e exclusão de imagens físicas no servidor ao desinstalar.
 * 📅 **Regras de Negócio:** Trava inteligente nativa que impede matematicamente o agendamento de licenças em feriados e finais de semana.
 * 🖼️ **Gestão de Mídia:** Otimização da Form API para suportar o upload e a renomeação de até 8 imagens de fundo simultâneas (`wall-N.ext`).
 * 🎨 **UI/UX e Interatividade:** Calendário responsivo reformulado com destaque sólido para o dia atual, dias da semana em estilo *Glassmorphism*, preenchimento de meses adjacentes e modal administrativo com título dinâmico.
-
-## 💾 Downloads
-
-- [mikedelta_pdia-v1.0.0.zip](https://github.com/m4rcelodiasBR/mikedelta_pdia/archive/refs/tags/v1.0.0.zip)
-- [mikedelta_pdia-v1.0.0.tar.gz](https://github.com/m4rcelodiasBR/mikedelta_pdia/archive/refs/tags/v1.0.0.tar.gz)
